@@ -1,0 +1,28 @@
+/* src/index.css */
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------
+   Global Base Styles
+---------------------------------- */
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "microcred-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MicroCred — A modern platform to create, upload, and verify micro-credentials securely.",
+  "author": "MicroCred Team",
+  "license": "MIT",
+  "homepage": "https://yourdomain.com",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "postcss": "^8.5.6",
+    "prettier": "^3.0.0",
+    "tailwindcss": "^3.4.18",
+    "vite": "^4.5.14"
+  }
+}
