@@ -18,20 +18,9 @@ export default function Footer() {
             MicroCred
           </Link>
 
-          {/* Links */}
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-            <Link to="/about" className="hover:text-blue-600 transition">
-              About
-            </Link>
-            <Link to="/verify" className="hover:text-blue-600 transition">
-              Verify
-            </Link>
-            <Link to="/upload" className="hover:text-blue-600 transition">
-              Upload
-            </Link>
-            <Link to="/contact" className="hover:text-blue-600 transition">
-              Contact
-            </Link>
+          {/* (Links moved to Navbar) */}
+          <div className="hidden sm:block text-sm text-gray-600 dark:text-gray-400"> 
+            {/* Intentionally left blank; primary navigation is in the Navbar */}
           </div>
 
           {/* Social Icons */}

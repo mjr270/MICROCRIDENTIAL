@@ -17,7 +17,9 @@ export default function Navbar() {
 
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/upload", label: "Upload", roles: ["Institution", "Admin"] },
+    { to: "/about", label: "About" },
+    { to: "/contact", label: "Contact" },
+    { to: "/upload", label: "Upload", roles: ["Learner", "Institution"] },
     { to: "/verify", label: "Verify", roles: ["Admin", "Employer"] },
     { to: "/dashboard", label: "Dashboard", roles: ["Learner", "Institution", "Employer", "Admin"] },
   ];
@@ -55,6 +57,16 @@ export default function Navbar() {
 
           {user ? (
             <>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  `font-medium hover:text-blue-600 transition ${
+                    isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-200"
+                  }`
+                }
+              >
+                Profile
+              </NavLink>
               <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm text-gray-600 dark:text-gray-300">
                 {user.email} <span className="text-xs text-gray-400">({user.role})</span>
               </span>

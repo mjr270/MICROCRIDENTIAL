@@ -88,9 +88,18 @@ function App() {
           } />
 
           {/* 404 and unauthorized */}
-          <Route path="/uanuthorized" element={<Unauthorized />} />
-          <Route path="/src/pages" element={<NotFound />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="*" element={<NotFound />} />
+
+          {/* Profile (requires login) */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
       <Footer />
