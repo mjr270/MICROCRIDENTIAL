@@ -11,7 +11,8 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify"
+    "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify",
+    "postinstall": "chmod +x node_modules/.bin/vite || echo 'Windows system – skipping chmod'"
   },
   "dependencies": {
     "react": "^18.2.0",
