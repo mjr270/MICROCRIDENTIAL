@@ -1,19 +1,29 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar.jsx'
-import Footer from './components/Footer.jsx'
-import LandingPage from './pages/LandingPage.jsx'
-import Login from './pages/Login.jsx'
-import Register from './pages/Register.jsx'
-import LearnerDashboard from './pages/Dshboards/LearnerDashboard.jsx'
-import InstitutionDashboard from './pages/Dshboards/InstitutionDashbord.jsx'
-import EmployerDashboard from './pages/Dshboards/EmployerDashboard.jsx'
-import AdminDashboard from './pages/Dshboards/AdminDashboard.jsx'
-import DocumentUpload from './pages/DocumentUpload.jsx'
-import VerifyDocuments from './pages/VerifyDocument.jsx'
-import NotFound from './pages/NotFound.jsx'
-import ProtectedRoute from './components/ProtectedRoute.jsx'
-import Unauthorized from './pages/Uanuthorized.jsx'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
+
+import LandingPage from './pages/LandingPage.jsx';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+
+import LearnerDashboard from './pages/Dshboards/LearnerDashboard.jsx';
+import InstitutionDashboard from './pages/Dshboards/InstitutionDashbord.jsx';
+import EmployerDashboard from './pages/Dshboards/EmployerDashboard.jsx';
+import AdminDashboard from './pages/Dshboards/AdminDashboard.jsx';
+
+import DocumentUpload from './pages/DocumentUpload.jsx';
+import VerifyDocuments from './pages/VerifyDocument.jsx';
+
+import NotFound from './pages/NotFound.jsx';
+import Unauthorized from './pages/Uanuthorized.jsx';
+
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Verify from "./pages/verify.jsx"; // new page
 
 function App() {
   return (
@@ -21,9 +31,15 @@ function App() {
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-8">
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* Protected Routes */}
           <Route path="/upload" element={
             <ProtectedRoute allowedRoles={['Learner', 'Institution']}>
               <DocumentUpload />
@@ -49,21 +65,25 @@ function App() {
               <EmployerDashboard />
             </ProtectedRoute>
           } />
-          <Route
-            path="/dashboard/admin"
-            element={
-              <ProtectedRoute allowedRoles={["Admin"]}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/Dshboard/admin" element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+
+          {/* Unauthorized & NotFound */}
+          <Route path="/uanuthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/verify" element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Verify />
+            </ProtectedRoute>
+          } />
         </Routes>
       </main>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
