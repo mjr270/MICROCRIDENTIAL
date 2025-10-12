@@ -24,6 +24,7 @@ import Verify from "./pages/VerifyDocument.jsx";
 
 import NotFound from './pages/NotFound.jsx';
 import Unauthorized from './pages/Uanuthorized.jsx';
+import Profile from "./pages/profile.jsx";
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
           {/* 404 and unauthorized */}
           <Route path="/uanuthorized" element={<Unauthorized />} />
           <Route path="/src/pages" element={<NotFound />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       <Footer />
