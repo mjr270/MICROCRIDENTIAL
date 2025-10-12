@@ -15,6 +15,7 @@
     "postinstall": "chmod +x node_modules/.bin/vite || echo 'Windows system – skipping chmod'"
   },
   "dependencies": {
+    "lucide-react": "^0.545.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
