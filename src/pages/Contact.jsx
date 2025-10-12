@@ -15,7 +15,6 @@ const Contact = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow p-6 bg-gray-50">
         <h1 className="text-5xl font-bold mb-6 text-center">Contact Us</h1>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
@@ -35,7 +34,6 @@ const Contact = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

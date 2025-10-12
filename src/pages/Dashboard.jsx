@@ -11,7 +11,6 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow p-6 bg-gray-50">
         <h1 className="text-5xl font-bold mb-6 text-center">Dashboard</h1>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -26,7 +25,6 @@ const Dashboard = () => {
           ))}
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 // src/pages/VerifyDocuments.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { getDocs, saveDocs, saveDoc, deleteDoc as removeDoc } from "../utils/storage";
-import { useAuth } from "../context/Authcontext";
+import { getDocs, saveDocs, saveDoc, deleteDoc as removeDoc } from "../utils/storage.js";
+import { useAuth } from "../context/Authcontext.jsx";
 import {
   Search,
   FileText,

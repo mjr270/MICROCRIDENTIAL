@@ -1,11 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 import LandingPage from './pages/LandingPage.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 import LearnerDashboard from './pages/Dshboards/LearnerDashboard.jsx';
 import InstitutionDashboard from './pages/Dshboards/InstitutionDashbord.jsx';
@@ -14,16 +19,11 @@ import AdminDashboard from './pages/Dshboards/AdminDashboard.jsx';
 
 import DocumentUpload from './pages/DocumentUpload.jsx';
 import VerifyDocuments from './pages/VerifyDocument.jsx';
+import UploadPage from "./pages/UploadPage.jsx";
+import Verify from "./pages/VerifyDocument.jsx";
 
 import NotFound from './pages/NotFound.jsx';
 import Unauthorized from './pages/Uanuthorized.jsx';
-
-import ProtectedRoute from './components/ProtectedRoute.jsx';
-
-import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import Verify from "./pages/verify.jsx"; // new page
 
 function App() {
   return (
@@ -45,40 +45,50 @@ function App() {
               <DocumentUpload />
             </ProtectedRoute>
           } />
+
           <Route path="/verify" element={
             <ProtectedRoute allowedRoles={['Admin']}>
               <VerifyDocuments />
             </ProtectedRoute>
           } />
+
           <Route path="/dashboard/learner" element={
             <ProtectedRoute allowedRoles={['Learner']}>
               <LearnerDashboard />
             </ProtectedRoute>
           } />
+
           <Route path="/dashboard/institution" element={
             <ProtectedRoute allowedRoles={['Institution']}>
               <InstitutionDashboard />
             </ProtectedRoute>
           } />
+
           <Route path="/dashboard/employer" element={
             <ProtectedRoute allowedRoles={['Employer']}>
               <EmployerDashboard />
             </ProtectedRoute>
           } />
-          <Route path="/Dshboard/admin" element={
+
+          <Route path="/dashboard/admin" element={
             <ProtectedRoute allowedRoles={['Admin']}>
               <AdminDashboard />
             </ProtectedRoute>
           } />
 
-          {/* Unauthorized & NotFound */}
-          <Route path="/uanuthorized" element={<Unauthorized />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/verify" element={
+          {/* Public Upload */}
+          <Route path="/src/pages" element={<UploadPage />} />
+
+          {/* Protected Verify Page */}
+          <Route path="/verify-page" element={
             <ProtectedRoute allowedRoles={['Admin']}>
               <Verify />
             </ProtectedRoute>
           } />
+
+          {/* 404 and unauthorized */}
+          <Route path="/uanuthorized" element={<Unauthorized />} />
+          <Route path="/src/pages" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
