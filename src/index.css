@@ -18,11 +18,73 @@
   body {
     margin: 0;
     padding: 0;
-    background-color: #f9fafb;
+    /* background-color intentionally left to Tailwind utility classes (e.g. bg-gray-50 / dark:bg-gray-900) */
   }
 
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  /* Headings use Poppins for a more modern look */
+  h1, h2, h3, h4, h5 {
+    font-family: 'Poppins', 'Inter', sans-serif;
+  }
+
+  /* Small animation utilities used across pages */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pop {
+    from { opacity: 0; transform: scale(.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fade-in { animation: fadeIn 480ms ease both; }
+  .animate-slide-up { animation: slideUp 520ms cubic-bezier(.2,.8,.2,1) both; }
+  .animate-pop { animation: pop 360ms cubic-bezier(.2,.8,.2,1) both; }
+  .smooth-transform { transition: transform 240ms ease, box-shadow 240ms ease, opacity 200ms ease; }
+
+  /* Shimmer effect for highlighting CTA or hero */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 120%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    animation: shimmer 2s infinite;
+    pointer-events: none;
+  }
+  @keyframes shimmer { to { left: 120%; } }
+
+  /* Card tilt on hover */
+  .tilt-hover { transform: perspective(600px) rotateX(0deg) rotateY(0deg); }
+  .tilt-hover:hover { transform: perspective(600px) rotateX(6deg) rotateY(-6deg) translateY(-4px); }
+
+  /* Simple confetti pieces used for visual effect */
+  .confetti-piece { position: fixed; width: 10px; height: 14px; opacity: 0.95; z-index: 9999; pointer-events: none; transform-origin: center; }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in, .animate-slide-up, .animate-pop, .shimmer, .tilt-hover, .smooth-transform { animation: none !important; transition: none !important; transform: none !important; }
+  }
+
+  /* Smooth theme transition helper */
+  .theme-transition {
+    transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
   }
 }

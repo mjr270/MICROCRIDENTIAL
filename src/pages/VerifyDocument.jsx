@@ -19,6 +19,7 @@ export default function VerifyDocuments() {
   const { user } = useAuth();
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState(null);
 
   // UI state
   const [query, setQuery] = useState("");
@@ -40,6 +41,14 @@ export default function VerifyDocuments() {
       setLoading(false);
     }
   }, []);
+
+  // stats derived
+  const statsSummary = useMemo(() => {
+    const total = docs.length;
+    const verified = docs.filter(d => d.status === 'verified').length;
+    const pending = docs.filter(d => d.status === 'pending').length;
+    return { total, verified, pending };
+  }, [docs]);
 
   // derived: filtered & sorted docs
   const filtered = useMemo(() => {
@@ -103,18 +112,23 @@ export default function VerifyDocuments() {
     if (!doc) return;
     const updated = { ...doc, status: "verified", verifiedAt: new Date().toISOString() };
     updateLocalDoc(updated);
+    setToast({ type: 'success', message: `${doc.name} verified` });
+    try { import('../utils/confetti').then(m => m.burstConfetti({ count: 16 })).catch(()=>{}); } catch(e) {}
+    setTimeout(() => setToast(null), 2200);
   };
 
   const bulkVerifySelected = () => {
     if (selected.size === 0) return alert("No documents selected.");
     if (!window.confirm(`Verify ${selected.size} selected document(s)?`)) return;
-
     const next = docs.map((d) =>
       selected.has(d.id) ? { ...d, status: "verified", verifiedAt: new Date().toISOString() } : d
     );
     setDocs(next);
     saveDocs(next);
     setSelected(new Set());
+    setToast({ type: 'success', message: `${selected.size} documents verified` });
+    try { import('../utils/confetti').then(m => m.burstConfetti({ count: Math.min(40, selected.size * 6) })) } catch(e) {}
+    setTimeout(() => setToast(null), 2200);
   };
 
   const deleteDoc = (id) => {
@@ -122,6 +136,8 @@ export default function VerifyDocuments() {
     removeDoc(id);
     const remaining = docs.filter((d) => d.id !== id);
     setDocs(remaining);
+    setToast({ type: 'success', message: 'Document deleted' });
+    setTimeout(() => setToast(null), 1500);
   };
 
   const toggleSelect = (id) => {

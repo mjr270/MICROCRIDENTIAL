@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { LanguageProvider } from './context/LanguageContext.jsx';
+import Chatbot from './components/Chatbot.jsx';
 
 import LandingPage from './pages/LandingPage.jsx';
 import Login from './pages/Login.jsx';
@@ -28,9 +30,10 @@ import Profile from "./pages/profile.jsx";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 container mx-auto px-4 py-8">
+    <LanguageProvider>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1 container mx-auto px-4 py-8">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
@@ -101,9 +104,11 @@ function App() {
             }
           />
         </Routes>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+        <Chatbot />
+      </div>
+    </LanguageProvider>
   );
 }
 

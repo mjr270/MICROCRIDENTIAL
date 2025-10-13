@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
 import { Menu, X } from "lucide-react"; // icons
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -15,13 +16,17 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  
+
+  const { lang, setLang, t } = useLanguage();
+
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
-    { to: "/upload", label: "Upload", roles: ["Learner", "Institution"] },
-    { to: "/verify", label: "Verify", roles: ["Admin", "Employer"] },
-    { to: "/dashboard", label: "Dashboard", roles: ["Learner", "Institution", "Employer", "Admin"] },
+    { to: "/", label: t('home') },
+    { to: "/about", label: t('about') },
+    { to: "/contact", label: t('contact') },
+    { to: "/upload", label: t('upload'), roles: ["Learner", "Institution"] },
+    { to: "/verify", label: t('verify'), roles: ["Admin", "Employer"] },
+    { to: "/dashboard", label: t('dashboard'), roles: ["Learner", "Institution", "Employer", "Admin"] },
   ];
 
   const visibleLinks = navLinks.filter(
@@ -76,6 +81,14 @@ export default function Navbar() {
               >
                 Logout
               </button>
+              {/* Language selector */}
+              <select value={lang} onChange={(e) => setLang(e.target.value)} className="ml-3 border rounded px-2 py-1 text-sm">
+                <option value="en">EN</option>
+                <option value="hi">HI</option>
+                <option value="bn">BN</option>
+                <option value="ta">TA</option>
+                <option value="te">TE</option>
+              </select>
             </>
           ) : (
             <>
@@ -91,6 +104,13 @@ export default function Navbar() {
               >
                 Register
               </Link>
+              <select value={lang} onChange={(e) => setLang(e.target.value)} className="ml-3 border rounded px-2 py-1 text-sm">
+                <option value="en">EN</option>
+                <option value="hi">HI</option>
+                <option value="bn">BN</option>
+                <option value="ta">TA</option>
+                <option value="te">TE</option>
+              </select>
             </>
           )}
         </div>
