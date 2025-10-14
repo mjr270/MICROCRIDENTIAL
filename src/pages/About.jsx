@@ -22,8 +22,8 @@ const About = () => {
   ];
 
   const testimonials = [
-    { id: 1, quote: "MicroCred helped me land my first developer role — the certificates mattered.", author: "Jordan M., Developer" },
-    { id: 2, quote: "Our institution relies on MicroCred to certify short professional courses.", author: "Dr. L. Wang, Partner" },
+    { id: 1, quote: "KaushalLink helped me land my first developer role — the certificates mattered.", author: "Jordan M., Developer" },
+    { id: 2, quote: "Our institution relies on KaushalLink to certify short professional courses.", author: "Dr. L. Wang, Partner" },
   ];
 
   return (
