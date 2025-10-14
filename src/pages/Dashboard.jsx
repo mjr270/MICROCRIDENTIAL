@@ -20,9 +20,9 @@ const fetchDashboardData = () =>
           { id: 6, title: "Communication Skills", category: "Non-Technical", verified: false, hours: 6 },
         ],
         certificates: [
-          { id: "c1", name: "JavaScript Fundamentals", issuer: "MicroCred", date: "2025-08-12" },
-          { id: "c2", name: "UX Foundations", issuer: "MicroCred", date: "2025-06-30" },
-          { id: "c3", name: "Data Structures", issuer: "MicroCred", date: "2024-12-01" },
+          { id: "c1", name: "JavaScript Fundamentals", issuer: "KaushalLink", date: "2025-08-12" },
+          { id: "c2", name: "UX Foundations", issuer: "KaushalLink", date: "2025-06-30" },
+          { id: "c3", name: "Data Structures", issuer: "KaushalLink", date: "2024-12-01" },
         ],
         activity: [
           { id: "a1", text: "Completed Intro to JavaScript", time: "2 days ago" },

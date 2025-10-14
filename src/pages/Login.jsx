@@ -52,7 +52,7 @@ export default function Login() {
             Welcome Back
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Sign in to continue to MicroCred
+            Sign in to continue to KaushalLink
           </p>
         </div>
 

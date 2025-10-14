@@ -41,7 +41,7 @@ export default function Navbar() {
           to="/"
           className="font-extrabold text-2xl text-blue-600 dark:text-blue-400 hover:text-blue-700 transition"
         >
-          MicroCred
+         KaushalLink
         </Link>
 
         {/* Desktop Links */}

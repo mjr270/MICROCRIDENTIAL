@@ -56,7 +56,7 @@ export default function LandingPage() {
   ];
 
   const testimonials = [
-    { id: 1, name: "Ayesha R.", note: "MicroCred helped our students showcase short courses — employers love the verifiable badges!" },
+    { id: 1, name: "Ayesha R.", note: "KaushalLink helped our students showcase short courses — employers love the verifiable badges!" },
     { id: 2, name: "Mark D.", note: "Fast, secure verification and seamless integration for our institution." },
   ];
 
@@ -236,7 +236,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-8">
             <h3 className="text-3xl font-extrabold">Trusted by institutions worldwide</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">Universities, training providers, and employers use MicroCred to issue, share and verify short-form credentials.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">Universities, training providers, and employers use KaushalLink to issue, share and verify short-form credentials.</p>
             <div className="mt-4 inline-flex items-center gap-3 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow">
               <div className="text-lg font-bold text-blue-600">450+</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">institutions onboarded</div>
@@ -303,7 +303,7 @@ export default function LandingPage() {
       )}
 
       <footer className="py-8 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 mt-12">
-        © {new Date().getFullYear()} MicroCred — built with ❤️ for modern learning.
+        © {new Date().getFullYear()} KaushalLink — built with ❤️ for modern learning.
       </footer>
     </div>
   );

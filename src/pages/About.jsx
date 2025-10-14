@@ -30,7 +30,7 @@ const About = () => {
     <div className="flex flex-col">
       <main className="flex-grow p-6 bg-gradient-to-b from-white to-blue-50">
   <section className="max-w-6xl mx-auto text-center py-12 animate-slide-up">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4" style={{ fontFamily: 'Poppins, Inter, sans-serif' }}>About MicroCred</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4" style={{ fontFamily: 'Poppins, Inter, sans-serif' }}>About KaushalLink</h1>
           <p className="text-gray-700 max-w-3xl mx-auto text-lg mb-6">We make micro-credentials practical and trusted — for learners, institutions, and employers. Learn the skills that matter and get verified when you succeed.</p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
@@ -46,7 +46,7 @@ const About = () => {
         <section className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center mb-12">
             <div className="space-y-4 animate-fade-in">
             <h2 className="text-2xl font-semibold">Our mission</h2>
-            <p className="text-gray-700">MicroCred empowers learners with short, verified learning experiences that map directly to industry needs. We partner with institutions and employers to make credentials meaningful and portable.</p>
+            <p className="text-gray-700">KaushalLink empowers learners with short, verified learning experiences that map directly to industry needs. We partner with institutions and employers to make credentials meaningful and portable.</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
               {features.map((f, i) => (
@@ -62,7 +62,7 @@ const About = () => {
           </div>
 
             <div className="bg-white p-6 rounded-lg shadow animate-pop">
-            <h3 className="font-semibold mb-2">Why MicroCred?</h3>
+            <h3 className="font-semibold mb-2">Why KaushalLink?</h3>
             <ul className="list-disc pl-5 text-gray-700 space-y-2">
               <li>Short, focused courses built with industry partners.</li>
               <li>Verifiable badges & certificates employers can trust.</li>

@@ -169,7 +169,7 @@ export default function VerifyDocuments() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `microcred-docs-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `KaushalLink-docs-${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(a);
     a.click();
     a.remove();

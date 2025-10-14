@@ -2,8 +2,8 @@
   "name": "microcred-frontend",
   "version": "1.0.0",
   "private": true,
-  "description": "MicroCred — A modern platform to create, upload, and verify micro-credentials securely.",
-  "author": "MicroCred Team",
+  "description": "KaushalLink — A modern platform to create, upload, and verify micro-credentials securely.",
+  "author": "KaushalLink Team",
   "license": "MIT",
   "homepage": "https://yourdomain.com",
   "scripts": {
