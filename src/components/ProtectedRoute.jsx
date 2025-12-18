@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
+import "../Style/ProtectedRoute.css";
 
 /**
  * ProtectedRoute Component
@@ -17,8 +18,8 @@ export default function ProtectedRoute({ children, allowedRoles = [] }) {
   // 🕒 While auth context is checking user state
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="text-gray-600 dark:text-gray-300 text-sm animate-pulse">
+      <div className="protected-route-loading">
+        <div className="loading-text">
           Checking authentication...
         </div>
       </div>

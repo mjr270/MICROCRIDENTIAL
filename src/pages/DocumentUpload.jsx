@@ -3,6 +3,7 @@ import { useAuth } from '../context/Authcontext'
 import { saveDoc, getDocs, deleteDoc, saveDocs } from '../utils/storage'
 import { burstConfetti } from '../utils/confetti'
 import { useNavigate } from 'react-router-dom'
+import '../Style/DocumentUpload.css'
 
 export default function DocumentUpload(){
   const { user } = useAuth()
@@ -129,49 +130,49 @@ export default function DocumentUpload(){
   }
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow animate-fade-in">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <h2 className="text-xl font-semibold">Upload Documents</h2>
-          <p className="text-sm text-gray-600">Allowed: PDF, PNG, JPG. Files are stored locally for demo purposes. Admins may verify uploaded documents.</p>
+    <div className="doc-upload-container">
+      <div className="doc-upload-header">
+        <div className="doc-upload-header-text">
+          <h2>Upload Documents</h2>
+          <p>Allowed: PDF, PNG, JPG. Files are stored locally for demo purposes. Admins may verify uploaded documents.</p>
         </div>
-        <div className="text-right">
-          <button onClick={() => navigate(-1)} className="px-3 py-1 border rounded smooth-transform hover:scale-105">Back</button>
+        <div>
+          <button onClick={() => navigate(-1)} className="doc-upload-back-btn">Back</button>
         </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block w-full rounded border-2 border-dashed p-4 text-center hover:border-blue-400 cursor-pointer smooth-transform hover:shadow-lg animate-pop">
-          <input type="file" onChange={handleInputChange} multiple className="hidden" />
-          <div className="text-sm text-gray-600">Click to select files or drag them here</div>
+      <div className="doc-upload-dropzone-wrapper">
+        <label className="doc-upload-dropzone">
+          <input type="file" onChange={handleInputChange} multiple />
+          <div className="doc-upload-dropzone-text">Click to select files or drag them here</div>
         </label>
       </div>
 
-      <div className="mb-4">
-        <h3 className="font-medium mb-2">Your uploads</h3>
+      <div className="doc-upload-list-section">
+        <h3 className="doc-upload-list-title">Your uploads</h3>
         {docs.length === 0 ? (
-          <div className="text-sm text-gray-500">No documents uploaded yet.</div>
+          <div className="doc-upload-empty">No documents uploaded yet.</div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="doc-upload-list">
             {docs.map((d, i) => (
-              <li key={d.id} className="p-3 bg-gray-50 rounded flex items-center justify-between animate-slide-up" style={{ animationDelay: `${i * 60}ms` }}>
-                <div>
-                  <div className="font-medium">{d.name}</div>
-                  <div className="text-xs text-gray-500">{(d.size/1024).toFixed(1)} KB • {d.type} • {new Date(d.createdAt).toLocaleString()}</div>
+              <li key={d.id} className="doc-upload-item" style={{ animationDelay: `${i * 60}ms` }}>
+                <div className="doc-upload-item-info">
+                  <h4>{d.name}</h4>
+                  <div className="doc-upload-item-meta">{(d.size/1024).toFixed(1)} KB • {d.type} • {new Date(d.createdAt).toLocaleString()}</div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="doc-upload-item-actions">
                   {uploadingMap[d.id] ? (
-                    <div className="w-36">
-                      <div className="w-full bg-gray-200 h-2 rounded mb-1">
-                        <div className="h-2 bg-blue-600 rounded" style={{ width: `${uploadingMap[d.id]}%` }} />
+                    <div className="doc-upload-progress">
+                      <div className="doc-upload-progress-bar-wrapper">
+                        <div className="doc-upload-progress-bar" style={{ width: `${uploadingMap[d.id]}%` }} />
                       </div>
-                      <div className="text-xs text-gray-500">Uploading {uploadingMap[d.id]}%</div>
+                      <div className="doc-upload-progress-text">Uploading {uploadingMap[d.id]}%</div>
                     </div>
                   ) : (
                     <>
-                      <span className={`text-sm px-2 py-1 rounded ${d.status === 'verified' ? 'bg-green-100 text-green-800' : d.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-700'}`}>{d.status}</span>
-                      <button onClick={() => handleDownload(d)} className="px-3 py-1 border rounded text-sm smooth-transform hover:scale-105">Download</button>
-                      <button onClick={() => handleDelete(d.id)} className="px-3 py-1 border rounded text-sm text-red-600 smooth-transform hover:scale-105">Delete</button>
+                      <span className={`doc-upload-status-badge ${d.status}`}>{d.status}</span>
+                      <button onClick={() => handleDownload(d)} className="doc-upload-action-btn">Download</button>
+                      <button onClick={() => handleDelete(d.id)} className="doc-upload-action-btn delete">Delete</button>
                     </>
                   )}
                 </div>
@@ -182,7 +183,7 @@ export default function DocumentUpload(){
       </div>
 
       {toast && (
-        <div className={`fixed right-6 bottom-6 p-3 rounded shadow ${toast.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'} animate-pop`}>
+        <div className={`doc-upload-toast ${toast.type}`}>
           {toast.message}
         </div>
       )}

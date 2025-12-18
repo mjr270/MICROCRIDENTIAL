@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/Authcontext'
 import { burstConfetti } from '../utils/confetti'
+import "../Style/Register.css"
 
 export default function Register() {
   const [email, setEmail] = useState('')
@@ -31,28 +32,28 @@ export default function Register() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded shadow mt-10 animate-fade-in">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Create an Account</h2>
-      {error && <div className="mb-3 text-sm text-red-600 bg-red-50 p-2 rounded">{error}</div>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium">Email</label>
+    <div className="register-container">
+      <h2 className="register-title">Create an Account</h2>
+      {error && <div className="register-error">{error}</div>}
+      <form onSubmit={handleSubmit} className="register-form">
+        <div className="register-form-group">
+          <label className="register-label">Email</label>
           <input
             required
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-200 outline-none"
+            className="register-input"
             placeholder="you@example.com"
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium">Role</label>
+        <div className="register-form-group">
+          <label className="register-label">Role</label>
           <select
             value={role}
             onChange={e => setRole(e.target.value)}
-            className="w-full border px-3 py-2 rounded focus:ring focus:ring-blue-200 outline-none"
+            className="register-select"
           >
             <option>Learner</option>
             <option>Institution</option>
@@ -63,7 +64,7 @@ export default function Register() {
 
         <button
           type="submit"
-          className={`w-full py-2 ${loading ? 'bg-blue-400' : 'bg-green-600 hover:bg-green-700'} text-white rounded transition smooth-transform ${loading ? '' : 'hover:scale-105'}`}
+          className={`register-button ${loading ? 'register-button-loading' : 'register-button-primary'}`}
           disabled={loading}
         >
           {loading ? 'Creating...' : 'Create Account'}

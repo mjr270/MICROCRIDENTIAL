@@ -1,0 +1,32 @@
+/* ProtectedRoute Component Styles */
+
+.protected-route-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9fafb;
+}
+
+:root[data-theme="dark"] .protected-route-loading {
+  background-color: #111827;
+}
+
+.loading-text {
+  color: #4b5563;
+  font-size: 0.875rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+:root[data-theme="dark"] .loading-text {
+  color: #d1d5db;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}

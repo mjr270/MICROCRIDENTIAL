@@ -3,6 +3,7 @@ import { useAuth } from "../context/Authcontext";
 import { getDocs, deleteDoc, verifyDoc } from "../utils/storage";
 import { Link } from "react-router-dom";
 import { Loader2, CheckCircle2, FileText, Trash2, Eye, ShieldCheck } from "lucide-react";
+import "../Style/DocumentList.css";
 
 export default function DocumentList() {
   const { user } = useAuth();
@@ -43,15 +44,15 @@ export default function DocumentList() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-6">
-      <div className="mb-6 flex flex-wrap justify-between items-center">
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+    <div className="document-list-container">
+      <div className="document-list-header">
+        <h2 className="document-list-title">
           Document Repository
         </h2>
         {user && (
           <Link
             to="/upload"
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-sm transition"
+            className="upload-new-btn"
           >
             Upload New
           </Link>
@@ -59,45 +60,45 @@ export default function DocumentList() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-10">
+        <div className="loading-spinner">
           <Loader2 className="animate-spin text-blue-500 w-8 h-8" />
         </div>
       ) : docs.length === 0 ? (
-        <div className="bg-white dark:bg-gray-800 text-center py-10 rounded-lg shadow">
-          <FileText className="mx-auto w-10 h-10 text-gray-400" />
-          <p className="mt-3 text-gray-600 dark:text-gray-300">
+        <div className="empty-state">
+          <FileText className="empty-state-icon" />
+          <p className="empty-state-text">
             No documents found.
           </p>
           <Link
             to="/upload"
-            className="mt-4 inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition"
+            className="upload-first-btn"
           >
             Upload Your First Document
           </Link>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="documents-grid">
           {docs.map((doc) => (
             <div
               key={doc.id}
-              className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 flex flex-col sm:flex-row sm:items-center justify-between transition hover:shadow-lg"
+              className="document-card"
             >
-              <div className="flex flex-col">
-                <span className="font-semibold text-gray-800 dark:text-gray-100 text-lg">
+              <div className="document-info">
+                <span className="document-name">
                   {doc.name}
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="document-date">
                   Uploaded: {new Date(doc.createdAt).toLocaleString()}
                 </span>
-                <span className="mt-1 text-sm">
+                <span className="document-status">
                   Status:{" "}
                   <span
-                    className={`font-medium ${
+                    className={`status-label ${
                       doc.status === "verified"
-                        ? "text-green-600 dark:text-green-400"
+                        ? "status-verified"
                         : doc.status === "pending"
-                        ? "text-yellow-600 dark:text-yellow-400"
-                        : "text-gray-500"
+                        ? "status-pending"
+                        : "status-other"
                     }`}
                   >
                     {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
@@ -105,13 +106,13 @@ export default function DocumentList() {
                 </span>
               </div>
 
-              <div className="flex gap-2 mt-3 sm:mt-0">
+              <div className="document-actions">
                 {doc.dataUrl && (
                   <a
                     href={doc.dataUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 px-3 py-1.5 border rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 transition"
+                    className="view-btn"
                   >
                     <Eye size={16} /> View
                   </a>
@@ -121,7 +122,7 @@ export default function DocumentList() {
                 {user?.role === "Admin" && doc.status !== "verified" && (
                   <button
                     onClick={() => handleVerify(doc.id)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-md transition"
+                    className="verify-btn"
                   >
                     <ShieldCheck size={16} /> Verify
                   </button>
@@ -131,7 +132,7 @@ export default function DocumentList() {
                 {(user?.role === "Admin" || doc.owner === user.email) && (
                   <button
                     onClick={() => handleDelete(doc.id)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-md transition"
+                    className="delete-btn"
                   >
                     <Trash2 size={16} /> Delete
                   </button>

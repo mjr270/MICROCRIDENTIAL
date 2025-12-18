@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import DocumentList from "../../components/DocumentList";
 import { getDocs } from "../../utils/storage";
+import "../../Style/InstitutionDashboard.css";
 
 export default function InstitutionDashboard() {
   const allDocs = getDocs();
@@ -14,33 +15,33 @@ export default function InstitutionDashboard() {
   const pendingDocs = institutionDocs.filter((d) => d.status !== "verified").length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="institution-dashboard-container">
       {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+      <div className="institution-dashboard-header">
+        <h1 className="institution-dashboard-title">
           Institution Dashboard
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="institution-dashboard-subtitle">
           Manage and track documents issued by your institution.
         </p>
 
         {/* Quick Stats */}
-        <div className="mt-4 flex flex-wrap gap-4">
-          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow flex-1 min-w-[150px] text-center">
-            <div className="text-gray-500 dark:text-gray-400 text-sm">Total Documents</div>
-            <div className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+        <div className="institution-stats-grid">
+          <div className="institution-stat-card total">
+            <div className="institution-stat-label">Total Documents</div>
+            <div className="institution-stat-value">
               {totalDocs}
             </div>
           </div>
-          <div className="bg-green-100 dark:bg-green-900 p-4 rounded shadow flex-1 min-w-[150px] text-center">
-            <div className="text-green-800 dark:text-green-300 text-sm">Verified</div>
-            <div className="text-xl font-semibold text-green-900 dark:text-green-100">
+          <div className="institution-stat-card verified">
+            <div className="institution-stat-label">Verified</div>
+            <div className="institution-stat-value">
               {verifiedDocs}
             </div>
           </div>
-          <div className="bg-yellow-100 dark:bg-yellow-900 p-4 rounded shadow flex-1 min-w-[150px] text-center">
-            <div className="text-yellow-800 dark:text-yellow-300 text-sm">Pending</div>
-            <div className="text-xl font-semibold text-yellow-900 dark:text-yellow-100">
+          <div className="institution-stat-card pending">
+            <div className="institution-stat-label">Pending</div>
+            <div className="institution-stat-value">
               {pendingDocs}
             </div>
           </div>
@@ -48,8 +49,8 @@ export default function InstitutionDashboard() {
       </div>
 
       {/* Document List Section */}
-      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow">
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+      <div className="institution-documents-section">
+        <h2 className="institution-documents-title">
           Documents
         </h2>
         <DocumentList />

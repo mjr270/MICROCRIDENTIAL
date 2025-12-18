@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
 import { Mail, Lock, UserCircle2, LogIn, Eye, EyeOff } from "lucide-react";
 import { burstConfetti } from "../utils/confetti";
+import "../Style/Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -44,77 +45,77 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl w-full max-w-md p-8 transition transform hover:scale-[1.01] animate-fade-in">
-        <div className="text-center mb-6">
-          <UserCircle2 className="mx-auto w-12 h-12 text-blue-600 dark:text-blue-400" />
-          <h2 className="text-3xl font-bold mt-2 text-gray-800 dark:text-gray-100">
+    <div className="login-page">
+      <div className="login-container">
+        <div className="login-header">
+          <UserCircle2 className="login-icon" />
+          <h2 className="login-title">
             Welcome Back
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className="login-subtitle">
             Sign in to continue to KaushalLink
           </p>
         </div>
 
         {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 dark:bg-red-900/20 p-2 rounded-md text-center animate-fade-in">
+          <div className="login-error">
             {error}
           </div>
         )}
 
         {status && (
-          <div className="mb-4 text-sm text-green-700 bg-green-50 p-2 rounded-md text-center animate-pop">{status}</div>
+          <div className="login-status">{status}</div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="login-form">
           {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+          <div className="login-form-group">
+            <label className="login-label">
               Email Address
             </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+            <div className="login-input-wrapper">
+              <Mail className="login-input-icon" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                className="login-input"
                 placeholder="you@example.com"
               />
             </div>
           </div>
 
           {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+          <div className="login-form-group">
+            <label className="login-label">
               Password
             </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+            <div className="login-input-wrapper">
+              <Lock className="login-input-icon" />
               <input
                 type={showPassword ? "text" : "password"}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                className="login-input"
                 placeholder="••••••••"
               />
-              <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute right-2 top-2 text-gray-500">
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              <button type="button" onClick={() => setShowPassword(s => !s)} className="login-password-toggle">
+                {showPassword ? <EyeOff className="login-password-toggle-icon" /> : <Eye className="login-password-toggle-icon" />}
               </button>
             </div>
           </div>
 
           {/* Role */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+          <div className="login-form-group">
+            <label className="login-label">
               Select Role
             </label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+              className="login-select"
             >
               <option>Learner</option>
               <option>Institution</option>

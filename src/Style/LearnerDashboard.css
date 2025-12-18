@@ -1,0 +1,172 @@
+/* LearnerDashboard Styles */
+.learner-dashboard-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.learner-dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.learner-dashboard-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+:root[data-theme="dark"] .learner-dashboard-title {
+  color: #f3f4f6;
+}
+
+.learner-dashboard-subtitle {
+  color: #4b5563;
+}
+
+:root[data-theme="dark"] .learner-dashboard-subtitle {
+  color: #d1d5db;
+}
+
+.learner-stats-grid {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.learner-stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+}
+
+:root[data-theme="dark"] .learner-stat-card {
+  background: #1f2937;
+}
+
+.learner-stat-card.total {
+  background: white;
+}
+
+:root[data-theme="dark"] .learner-stat-card.total {
+  background: #1f2937;
+}
+
+.learner-stat-card.verified {
+  background: #d1fae5;
+}
+
+:root[data-theme="dark"] .learner-stat-card.verified {
+  background: #064e3b;
+}
+
+.learner-stat-card.pending {
+  background: #fef3c7;
+}
+
+:root[data-theme="dark"] .learner-stat-card.pending {
+  background: #78350f;
+}
+
+.learner-stat-label {
+  font-size: 0.875rem;
+}
+
+.learner-stat-card.total .learner-stat-label {
+  color: #6b7280;
+}
+
+:root[data-theme="dark"] .learner-stat-card.total .learner-stat-label {
+  color: #9ca3af;
+}
+
+.learner-stat-card.verified .learner-stat-label {
+  color: #065f46;
+}
+
+:root[data-theme="dark"] .learner-stat-card.verified .learner-stat-label {
+  color: #6ee7b7;
+}
+
+.learner-stat-card.pending .learner-stat-label {
+  color: #92400e;
+}
+
+:root[data-theme="dark"] .learner-stat-card.pending .learner-stat-label {
+  color: #fcd34d;
+}
+
+.learner-stat-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.learner-stat-card.total .learner-stat-value {
+  color: #1f2937;
+}
+
+:root[data-theme="dark"] .learner-stat-card.total .learner-stat-value {
+  color: #f3f4f6;
+}
+
+.learner-stat-card.verified .learner-stat-value {
+  color: #064e3b;
+}
+
+:root[data-theme="dark"] .learner-stat-card.verified .learner-stat-value {
+  color: #d1fae5;
+}
+
+.learner-stat-card.pending .learner-stat-value {
+  color: #78350f;
+}
+
+:root[data-theme="dark"] .learner-stat-card.pending .learner-stat-value {
+  color: #fde68a;
+}
+
+.learner-documents-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="dark"] .learner-documents-section {
+  background: #1f2937;
+}
+
+.learner-documents-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+:root[data-theme="dark"] .learner-documents-title {
+  color: #f3f4f6;
+}
+
+@media (max-width: 768px) {
+  .learner-dashboard-container {
+    padding: 1rem;
+  }
+
+  .learner-dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .learner-stats-grid {
+    flex-direction: column;
+  }
+
+  .learner-stat-card {
+    min-width: 100%;
+  }
+}

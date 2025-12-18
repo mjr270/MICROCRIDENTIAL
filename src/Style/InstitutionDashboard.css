@@ -1,0 +1,172 @@
+/* InstitutionDashboard Styles */
+.institution-dashboard-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.institution-dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.institution-dashboard-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+:root[data-theme="dark"] .institution-dashboard-title {
+  color: #f3f4f6;
+}
+
+.institution-dashboard-subtitle {
+  color: #4b5563;
+}
+
+:root[data-theme="dark"] .institution-dashboard-subtitle {
+  color: #d1d5db;
+}
+
+.institution-stats-grid {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.institution-stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+}
+
+:root[data-theme="dark"] .institution-stat-card {
+  background: #1f2937;
+}
+
+.institution-stat-card.total {
+  background: white;
+}
+
+:root[data-theme="dark"] .institution-stat-card.total {
+  background: #1f2937;
+}
+
+.institution-stat-card.verified {
+  background: #d1fae5;
+}
+
+:root[data-theme="dark"] .institution-stat-card.verified {
+  background: #064e3b;
+}
+
+.institution-stat-card.pending {
+  background: #fef3c7;
+}
+
+:root[data-theme="dark"] .institution-stat-card.pending {
+  background: #78350f;
+}
+
+.institution-stat-label {
+  font-size: 0.875rem;
+}
+
+.institution-stat-card.total .institution-stat-label {
+  color: #6b7280;
+}
+
+:root[data-theme="dark"] .institution-stat-card.total .institution-stat-label {
+  color: #9ca3af;
+}
+
+.institution-stat-card.verified .institution-stat-label {
+  color: #065f46;
+}
+
+:root[data-theme="dark"] .institution-stat-card.verified .institution-stat-label {
+  color: #6ee7b7;
+}
+
+.institution-stat-card.pending .institution-stat-label {
+  color: #92400e;
+}
+
+:root[data-theme="dark"] .institution-stat-card.pending .institution-stat-label {
+  color: #fcd34d;
+}
+
+.institution-stat-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.institution-stat-card.total .institution-stat-value {
+  color: #1f2937;
+}
+
+:root[data-theme="dark"] .institution-stat-card.total .institution-stat-value {
+  color: #f3f4f6;
+}
+
+.institution-stat-card.verified .institution-stat-value {
+  color: #064e3b;
+}
+
+:root[data-theme="dark"] .institution-stat-card.verified .institution-stat-value {
+  color: #d1fae5;
+}
+
+.institution-stat-card.pending .institution-stat-value {
+  color: #78350f;
+}
+
+:root[data-theme="dark"] .institution-stat-card.pending .institution-stat-value {
+  color: #fde68a;
+}
+
+.institution-documents-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="dark"] .institution-documents-section {
+  background: #1f2937;
+}
+
+.institution-documents-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+:root[data-theme="dark"] .institution-documents-title {
+  color: #f3f4f6;
+}
+
+@media (max-width: 768px) {
+  .institution-dashboard-container {
+    padding: 1rem;
+  }
+
+  .institution-dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .institution-stats-grid {
+    flex-direction: column;
+  }
+
+  .institution-stat-card {
+    min-width: 100%;
+  }
+}

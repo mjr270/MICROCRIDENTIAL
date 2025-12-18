@@ -1,0 +1,32 @@
+/* NotFound Page Styles */
+
+.notfound-container {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.notfound-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgb(17, 24, 39);
+  margin-bottom: 1rem;
+}
+
+:root[data-theme="dark"] .notfound-title {
+  color: rgb(243, 244, 246);
+}
+
+.notfound-text {
+  margin-top: 1rem;
+  color: rgb(107, 114, 128);
+  font-size: 1rem;
+}
+
+:root[data-theme="dark"] .notfound-text {
+  color: rgb(156, 163, 175);
+}

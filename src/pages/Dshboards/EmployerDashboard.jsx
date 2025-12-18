@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { getDocs } from "../../utils/storage";
+import "../../Style/EmployerDashboard.css";
 
 export default function EmployerDashboard() {
   const allDocs = getDocs();
@@ -11,21 +12,21 @@ export default function EmployerDashboard() {
   const totalVerified = verifiedDocs.length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="employer-dashboard-container">
       {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+      <div className="employer-dashboard-header">
+        <h1 className="employer-dashboard-title">
           Employer Dashboard
         </h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="employer-dashboard-subtitle">
           View all verified credentials uploaded by learners and institutions.
         </p>
 
         {/* Quick Stats */}
-        <div className="mt-4 flex flex-wrap gap-4">
-          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow flex-1 min-w-[150px] text-center">
-            <div className="text-gray-500 dark:text-gray-400 text-sm">Verified Documents</div>
-            <div className="text-xl font-semibold text-green-600 dark:text-green-400">
+        <div className="employer-stats-grid">
+          <div className="employer-stat-card">
+            <div className="employer-stat-label">Verified Documents</div>
+            <div className="employer-stat-value">
               {totalVerified}
             </div>
           </div>
@@ -33,26 +34,26 @@ export default function EmployerDashboard() {
       </div>
 
       {/* Verified Documents Section */}
-      <div className="space-y-4">
+      <div className="employer-documents-list">
         {verifiedDocs.length === 0 ? (
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="employer-no-docs">
             No verified documents yet.
           </p>
         ) : (
           verifiedDocs.map((doc) => (
             <div
               key={doc.id}
-              className="bg-white dark:bg-gray-800 p-4 rounded shadow flex justify-between items-center"
+              className="employer-doc-card"
             >
-              <div>
-                <div className="font-semibold text-gray-800 dark:text-gray-100">
+              <div className="employer-doc-info">
+                <div className="employer-doc-name">
                   {doc.name}
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="employer-doc-meta">
                   {doc.owner} • {new Date(doc.createdAt).toLocaleString()}
                 </div>
               </div>
-              <div className="text-green-600 dark:text-green-400 font-medium">
+              <div className="employer-doc-status">
                 Verified
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import "../Style/Dashboard.css";
 
 // Mock async fetch to simulate an API. Replace with real API calls.
 const fetchDashboardData = () =>
@@ -60,14 +61,14 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-gray-300 rounded w-1/3" />
-            <div className="grid grid-cols-3 gap-4">
-              <div className="h-24 bg-gray-200 rounded" />
-              <div className="h-24 bg-gray-200 rounded" />
-              <div className="h-24 bg-gray-200 rounded" />
+      <div className="dashboard-loading-wrapper">
+        <div className="dashboard-loading-container">
+          <div className="dashboard-loading-pulse">
+            <div className="dashboard-loading-title" />
+            <div className="dashboard-loading-stats">
+              <div className="dashboard-loading-stat" />
+              <div className="dashboard-loading-stat" />
+              <div className="dashboard-loading-stat" />
             </div>
           </div>
         </div>
@@ -78,19 +79,19 @@ const Dashboard = () => {
   const { stats, certificates, activity } = data;
 
   return (
-    <div className="flex flex-col">
-      <main className="flex-grow p-6 bg-gray-50 animate-fade-in">
-        <div className="max-w-6xl mx-auto">
-          <header className="flex items-center justify-between mb-6 animate-slide-up">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold">Welcome back</h1>
-              <p className="text-gray-600">Overview of your learning and achievements</p>
+    <div className="dashboard-wrapper">
+      <main className="dashboard-main">
+        <div className="dashboard-container">
+          <header className="dashboard-header">
+            <div className="dashboard-header-text">
+              <h1>Welcome back</h1>
+              <p>Overview of your learning and achievements</p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-sm text-gray-500">Verified Courses</div>
-                <div className="text-xl font-semibold">{stats.verifiedCourses}</div>
+            <div className="dashboard-header-actions">
+              <div className="dashboard-verified-count">
+                <div className="dashboard-verified-label">Verified Courses</div>
+                <div className="dashboard-verified-value">{stats.verifiedCourses}</div>
               </div>
               <button
                 onClick={async () => {
@@ -104,7 +105,7 @@ const Dashboard = () => {
                     setTimeout(() => setToast(null), 2500);
                   }
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded smooth-transform hover:scale-105"
+                className="dashboard-share-btn"
               >
                 Share Profile
               </button>
@@ -112,37 +113,37 @@ const Dashboard = () => {
           </header>
 
           {/* Top stats */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="p-4 bg-white rounded-lg shadow flex flex-col animate-pop smooth-transform hover:scale-105">
-              <div className="text-sm text-gray-500">Courses Completed</div>
-              <div className="text-2xl font-bold">{stats.coursesCompleted}</div>
-              <div className="mt-3 text-xs text-gray-500">Keep up the great work — aim for 20!</div>
+          <section className="dashboard-stats-grid">
+            <div className="dashboard-stat-card">
+              <div className="dashboard-stat-label">Courses Completed</div>
+              <div className="dashboard-stat-value">{stats.coursesCompleted}</div>
+              <div className="dashboard-stat-hint">Keep up the great work — aim for 20!</div>
             </div>
 
-            <div className="p-4 bg-white rounded-lg shadow flex flex-col animate-pop smooth-transform hover:scale-105">
-              <div className="text-sm text-gray-500">Certificates Earned</div>
-              <div className="text-2xl font-bold">{stats.certificatesEarned}</div>
-              <div className="mt-3 text-xs text-gray-500">Certificates verify your skills.</div>
+            <div className="dashboard-stat-card">
+              <div className="dashboard-stat-label">Certificates Earned</div>
+              <div className="dashboard-stat-value">{stats.certificatesEarned}</div>
+              <div className="dashboard-stat-hint">Certificates verify your skills.</div>
             </div>
 
-            <div className="p-4 bg-white rounded-lg shadow flex flex-col animate-pop smooth-transform hover:scale-105">
-              <div className="text-sm text-gray-500">Active Learning Hours</div>
-              <div className="text-2xl font-bold">{stats.activeHours}</div>
-              <div className="mt-3 text-xs text-gray-500">Total hours logged this year.</div>
+            <div className="dashboard-stat-card">
+              <div className="dashboard-stat-label">Active Learning Hours</div>
+              <div className="dashboard-stat-value">{stats.activeHours}</div>
+              <div className="dashboard-stat-hint">Total hours logged this year.</div>
             </div>
           </section>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="dashboard-content-grid">
             {/* Left: Courses */}
-            <div className="md:col-span-2">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">Verified courses</h2>
-                <div className="flex items-center gap-2">
+            <div className="dashboard-courses-section">
+              <div className="dashboard-courses-header">
+                <h2 className="dashboard-courses-title">Verified courses</h2>
+                <div className="dashboard-filter-buttons">
                   {["All", "Verified", "Technical", "Non-Technical"].map((f) => (
                     <button
                       key={f}
                       onClick={() => setFilter(f)}
-                      className={`px-3 py-1 rounded ${filter === f ? "bg-blue-600 text-white" : "bg-white border"}`}
+                      className={`dashboard-filter-btn ${filter === f ? "active" : "inactive"}`}
                     >
                       {f}
                     </button>
@@ -150,22 +151,22 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="dashboard-courses-list">
                 {filteredCourses.map((c, idx) => (
-                  <article key={c.id} className="p-4 bg-white rounded-lg shadow flex items-center justify-between animate-fade-in smooth-transform" style={{ animationDelay: `${idx * 40}ms` }}>
-                    <div>
-                      <h3 className="font-semibold">{c.title}</h3>
-                      <div className="text-sm text-gray-500">{c.category} • {c.hours} hrs</div>
+                  <article key={c.id} className="dashboard-course-card" style={{ animationDelay: `${idx * 40}ms` }}>
+                    <div className="dashboard-course-info">
+                      <h3>{c.title}</h3>
+                      <div className="dashboard-course-meta">{c.category} • {c.hours} hrs</div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="dashboard-course-actions">
                       {c.verified ? (
-                        <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">Verified</span>
+                        <span className="dashboard-course-status verified">Verified</span>
                       ) : (
-                        <span className="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">In progress</span>
+                        <span className="dashboard-course-status inprogress">In progress</span>
                       )}
                       <button
                         onClick={() => setSelectedCourse(c)}
-                        className="px-3 py-1 border rounded text-sm smooth-transform hover:scale-105"
+                        className="dashboard-course-view-btn"
                       >
                         View
                       </button>
@@ -176,15 +177,15 @@ const Dashboard = () => {
             </div>
 
             {/* Right: Certificates & Activity */}
-            <aside className="space-y-4">
-              <div className="p-4 bg-white rounded-lg shadow animate-pop smooth-transform">
-                <h3 className="font-semibold mb-2">Certificates</h3>
-                <ul className="space-y-2">
+            <aside className="dashboard-sidebar">
+              <div className="dashboard-sidebar-card">
+                <h3 className="dashboard-sidebar-title">Certificates</h3>
+                <ul className="dashboard-certificates-list">
                   {certificates.map((cert) => (
-                      <li key={cert.id} className="flex items-center justify-between animate-slide-up">
-                      <div>
-                        <div className="font-medium">{cert.name}</div>
-                        <div className="text-xs text-gray-500">{cert.issuer} • {new Date(cert.date).toLocaleDateString()}</div>
+                      <li key={cert.id} className="dashboard-certificate-item">
+                      <div className="dashboard-certificate-info">
+                        <h4>{cert.name}</h4>
+                        <div className="dashboard-certificate-meta">{cert.issuer} • {new Date(cert.date).toLocaleDateString()}</div>
                       </div>
                       <button
                         onClick={() => {
@@ -203,7 +204,7 @@ const Dashboard = () => {
                             try { import('../utils/confetti').then(m => m.burstConfetti({ count: 14 })).catch(() => {}); } catch(e) {}
                             setTimeout(() => setToast(null), 2000);
                         }}
-                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded text-sm smooth-transform hover:scale-105"
+                        className="dashboard-certificate-download-btn"
                       >
                         Download
                       </button>
@@ -212,13 +213,13 @@ const Dashboard = () => {
                 </ul>
               </div>
 
-              <div className="p-4 bg-white rounded-lg shadow animate-pop smooth-transform">
-                <h3 className="font-semibold mb-2">Recent activity</h3>
-                <ul className="text-sm text-gray-700 space-y-2">
+              <div className="dashboard-sidebar-card">
+                <h3 className="dashboard-sidebar-title">Recent activity</h3>
+                <ul className="dashboard-activity-list">
                   {activity.map((a) => (
-                    <li key={a.id} className="flex justify-between items-center">
+                    <li key={a.id} className="dashboard-activity-item">
                       <span>{a.text}</span>
-                      <span className="text-xs text-gray-400">{a.time}</span>
+                      <span className="dashboard-activity-time">{a.time}</span>
                     </li>
                   ))}
                 </ul>
@@ -230,23 +231,23 @@ const Dashboard = () => {
 
         {/* Toast */}
         {toast && (
-          <div className={`fixed right-6 bottom-6 p-3 rounded shadow ${toast.type === "success" ? "bg-green-50 text-green-800" : "bg-red-50 text-red-800"} animate-pop`}> 
+          <div className={`dashboard-toast ${toast.type}`}> 
             {toast.message}
           </div>
         )}
 
         {/* Course drawer/modal */}
         {selectedCourse && (
-          <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center animate-fade-in">
-            <div className="bg-white rounded-t-lg sm:rounded-lg w-full sm:w-3/4 max-w-2xl p-6 animate-pop smooth-transform">
-              <div className="flex justify-between items-start">
+          <div className="dashboard-modal-overlay">
+            <div className="dashboard-modal-content">
+              <div className="dashboard-modal-header">
                 <div>
-                  <h3 className="text-xl font-semibold">{selectedCourse.title}</h3>
-                  <div className="text-sm text-gray-500">{selectedCourse.category} • {selectedCourse.hours} hrs</div>
+                  <h3 className="dashboard-modal-title">{selectedCourse.title}</h3>
+                  <div className="dashboard-modal-subtitle">{selectedCourse.category} • {selectedCourse.hours} hrs</div>
                 </div>
-                <button onClick={() => setSelectedCourse(null)} className="text-gray-500">Close</button>
+                <button onClick={() => setSelectedCourse(null)} className="dashboard-modal-close-btn">Close</button>
               </div>
-              <div className="mt-4 text-gray-700">
+              <div className="dashboard-modal-body">
                 <p>This is a placeholder details view. Replace with full course details, progress, and actions (resume, certificate, share).</p>
               </div>
             </div>

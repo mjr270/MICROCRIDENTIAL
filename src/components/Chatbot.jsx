@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
+import '../Style/Chatbot.css';
 
 // Minimal multilingual chatbot widget with canned responses
 // Languages supported: en (English), es (Spanish), fr (French), bn (Bengali)
@@ -104,16 +105,16 @@ export default function Chatbot() {
   return (
     <div>
       {/* Floating button */}
-      <div className="fixed right-6 bottom-6 z-50">
+      <div className="chatbot-container">
         {open && (
-          <div className="w-80 bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden border">
-            <div className="p-3 bg-blue-600 text-white flex items-center justify-between">
-              <div className="font-semibold">Help Chat</div>
-              <div className="flex items-center gap-2">
+          <div className="chatbot-window">
+            <div className="chatbot-header">
+              <div className="chatbot-title">Help Chat</div>
+              <div className="chatbot-header-controls">
                 <select
                   value={lang}
                   onChange={(e) => setLang(e.target.value)}
-                  className="text-sm rounded px-2 py-1"
+                  className="chatbot-lang-select"
                   aria-label="Select language"
                 >
                   <option value="en">EN</option>
@@ -121,22 +122,22 @@ export default function Chatbot() {
                   <option value="fr">FR</option>
                   <option value="bn">BN</option>
                 </select>
-                <button onClick={() => setOpen(false)} className="text-white text-sm px-2">Close</button>
+                <button onClick={() => setOpen(false)} className="chatbot-close-btn">Close</button>
               </div>
             </div>
 
-            <div ref={listRef} className="p-3 h-48 overflow-auto space-y-3 bg-gray-50 dark:bg-gray-900">
+            <div ref={listRef} className="chatbot-messages">
               {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.from === 'bot' ? 'justify-start' : 'justify-end'}`}>
-                  <div className={`${m.from === 'bot' ? 'bg-white dark:bg-gray-800 text-gray-800' : 'bg-blue-600 text-white'} p-2 rounded-lg max-w-[80%]`}>{m.text}</div>
+                <div key={i} className={`message-wrapper ${m.from}`}>
+                  <div className={`message-bubble ${m.from}`}>{m.text}</div>
                 </div>
               ))}
             </div>
 
-            <form onSubmit={handleSubmit} className="p-3 border-t bg-white dark:bg-gray-800">
-              <div className="flex gap-2">
-                <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={lang === 'en' ? 'Type a message...' : 'Message...'} className="flex-1 px-3 py-2 rounded border" />
-                <button type="submit" className="px-3 py-2 bg-blue-600 text-white rounded">Send</button>
+            <form onSubmit={handleSubmit} className="chatbot-input-form">
+              <div className="chatbot-input-wrapper">
+                <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={lang === 'en' ? 'Type a message...' : 'Message...'} className="chatbot-input" />
+                <button type="submit" className="chatbot-send-btn">Send</button>
               </div>
             </form>
           </div>
@@ -144,7 +145,7 @@ export default function Chatbot() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg flex items-center justify-center"
+          className="chatbot-toggle-btn"
           aria-label="Open chat"
         >
           {open ? '✕' : '💬'}

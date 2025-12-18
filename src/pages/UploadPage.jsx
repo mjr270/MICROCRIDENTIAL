@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import "../Style/UploadPage.css";
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -52,36 +53,36 @@ const UploadPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col items-center justify-center px-6 py-10">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
-        <FaCloudUploadAlt className="text-6xl text-blue-600 mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold mb-2 text-gray-800">Upload Your File</h2>
-        <p className="text-gray-500 mb-6">Upload images, videos, or documents safely.</p>
+    <div className="upload-page">
+      <div className="upload-container">
+        <FaCloudUploadAlt className="dropzone-icon" />
+        <h2 className="upload-title">Upload Your File</h2>
+        <p className="upload-subtitle">Upload images, videos, or documents safely.</p>
 
-        <div className="border-2 border-dashed border-blue-300 rounded-xl p-6 mb-4 transition hover:border-blue-500">
+        <div className="upload-dropzone">
           <input
             type="file"
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-700 border-none outline-none cursor-pointer"
+            className="file-input"
           />
         </div>
 
         {preview && (
-          <div className="mb-4">
+          <div className="preview-section">
             {file.type.startsWith("image/") ? (
               <img
                 src={preview}
                 alt="preview"
-                className="rounded-xl w-full max-h-60 object-cover"
+                className="preview-image"
               />
             ) : file.type.startsWith("video/") ? (
               <video
                 src={preview}
                 controls
-                className="rounded-xl w-full max-h-60 object-cover"
+                className="preview-video"
               />
             ) : (
-              <p className="text-gray-500">Preview not available for this file type.</p>
+              <p className="preview-unavailable">Preview not available for this file type.</p>
             )}
           </div>
         )}
@@ -89,17 +90,17 @@ const UploadPage = () => {
         <button
           onClick={handleUpload}
           disabled={uploading}
-          className={`w-full py-3 text-white font-semibold rounded-xl transition ${
-            uploading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+          className={`upload-btn ${
+            uploading ? "uploading" : "ready"
           }`}
         >
           {uploading ? "Uploading..." : "Upload"}
         </button>
 
         {uploading && (
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
+          <div className="progress-bar-container">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="progress-bar"
               style={{ width: `${progress}%` }}
             ></div>
           </div>

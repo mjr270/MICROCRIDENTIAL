@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getDocs, saveDocs, saveDoc, deleteDoc as removeDoc } from "../utils/storage.js";
 import { useAuth } from "../context/Authcontext.jsx";
+import "../Style/VerifyDocument.css";
 import {
   Search,
   FileText,
@@ -178,41 +179,41 @@ export default function VerifyDocuments() {
 
   if (loading) {
     return (
-      <div className="py-16 flex justify-center">
-        <Loader2 className="animate-spin w-8 h-8 text-blue-600" />
+      <div className="verify-loading-wrapper">
+        <Loader2 className="verify-loading-icon" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto py-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <FileText className="w-6 h-6 text-blue-600" />
+    <div className="verify-container">
+      <div className="verify-header">
+        <div className="verify-title-section">
+          <FileText className="verify-icon" />
           <div>
-            <h3 className="text-lg font-semibold">Document Verification</h3>
-            <p className="text-sm text-gray-500">Review and verify uploaded credentials</p>
+            <h3 className="verify-title">Document Verification</h3>
+            <p className="verify-subtitle">Review and verify uploaded credentials</p>
           </div>
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col sm:flex-row gap-2 items-stretch">
-          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border rounded px-2">
-            <Search className="w-4 h-4 text-gray-400" />
+        <div className="verify-controls">
+          <div className="verify-search-wrapper">
+            <Search className="verify-search-icon" />
             <input
               value={query}
               onChange={(e) => { setQuery(e.target.value); setPage(1); }}
               placeholder="Search by name, owner or id"
-              className="px-2 py-2 outline-none bg-transparent text-sm min-w-[200px]"
+              className="verify-search-input"
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="verify-filters-group">
             <label className="sr-only">Status filter</label>
             <select
               value={statusFilter}
               onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-              className="border rounded px-3 py-2 text-sm bg-white dark:bg-gray-800"
+              className="verify-select"
               aria-label="Filter by status"
             >
               <option value="all">All statuses</option>
@@ -224,7 +225,7 @@ export default function VerifyDocuments() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="border rounded px-3 py-2 text-sm bg-white dark:bg-gray-800"
+              className="verify-select"
               aria-label="Sort documents"
             >
               <option value="newest">Newest</option>
@@ -233,26 +234,24 @@ export default function VerifyDocuments() {
             </select>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="verify-actions-group">
             <button
               onClick={exportCSV}
-              className="inline-flex items-center gap-2 px-3 py-2 border rounded bg-white dark:bg-gray-800 text-sm hover:shadow"
+              className="verify-export-btn"
               title="Export filtered list as CSV"
             >
-              <Download className="w-4 h-4" /> Export
+              <Download className="verify-doc-icon" /> Export
             </button>
 
             {user?.role === "Admin" && (
               <button
                 onClick={bulkVerifySelected}
                 disabled={selected.size === 0}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded text-sm ${
-                  selected.size === 0
-                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                    : "bg-green-600 text-white hover:bg-green-700"
+                className={`verify-bulk-btn ${
+                  selected.size === 0 ? "disabled" : "active"
                 }`}
               >
-                <CheckSquare className="w-4 h-4" /> Verify Selected
+                <CheckSquare className="verify-doc-icon" /> Verify Selected
               </button>
             )}
           </div>
@@ -260,48 +259,48 @@ export default function VerifyDocuments() {
       </div>
 
       {/* list */}
-      <div className="space-y-3">
+      <div className="verify-list">
         {filtered.length === 0 ? (
-          <div className="bg-white dark:bg-gray-800 p-6 rounded shadow text-center">
-            <p className="text-gray-600">No documents found for the current filters.</p>
-            <p className="text-sm text-gray-400 mt-2">Try clearing the search or changing filters.</p>
+          <div className="verify-empty-state">
+            <p className="verify-empty-message">No documents found for the current filters.</p>
+            <p className="verify-empty-hint">Try clearing the search or changing filters.</p>
           </div>
         ) : (
           <>
-            <div className="grid gap-3">
+            <div className="verify-docs-grid">
               {pageItems.map((doc) => (
                 <div
                   key={doc.id}
-                  className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  className="verify-doc-card"
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="verify-doc-content">
                     <input
                       aria-label={`Select document ${doc.name}`}
                       type="checkbox"
                       checked={selected.has(doc.id)}
                       onChange={() => toggleSelect(doc.id)}
-                      className="mt-1"
+                      className="verify-doc-checkbox"
                     />
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-800 dark:text-gray-100">{doc.name}</span>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600">
+                      <div className="verify-doc-header">
+                        <span className="verify-doc-name">{doc.name}</span>
+                        <span className="verify-doc-type-badge">
                           {doc.type || "Document"}
                         </span>
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="verify-doc-meta">
                         {doc.owner} • {new Date(doc.createdAt).toLocaleString()}
                       </div>
-                      <div className="text-sm mt-1">
-                        Status:{" "}
+                      <div className="verify-doc-status">
+                        <span className="verify-doc-status-label">Status: </span>
                         <span
-                          className={
+                          className={`verify-doc-status-value ${
                             doc.status === "verified"
-                              ? "text-green-600"
+                              ? "verified"
                               : doc.status === "pending"
-                              ? "text-yellow-600"
-                              : "text-gray-500"
-                          }
+                              ? "pending"
+                              : "default"
+                          }`}
                         >
                           {doc.status}
                         </span>
@@ -309,25 +308,25 @@ export default function VerifyDocuments() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="verify-doc-actions">
                     {doc.dataUrl && (
                       <a
                         href={doc.dataUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-3 py-1.5 border rounded text-sm hover:bg-gray-50"
+                        className="verify-doc-open-btn"
                         title="Open document"
                       >
-                        <Eye className="w-4 h-4" /> Open
+                        <Eye className="verify-doc-icon" /> Open
                       </a>
                     )}
 
                     {user?.role === "Admin" && doc.status !== "verified" && (
                       <button
                         onClick={() => verify(doc.id)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700"
+                        className="verify-doc-verify-btn"
                       >
-                        <CheckSquare className="w-4 h-4" /> Verify
+                        <CheckSquare className="verify-doc-icon" /> Verify
                       </button>
                     )}
 
@@ -335,9 +334,9 @@ export default function VerifyDocuments() {
                     {(user?.role === "Admin" || doc.owner === user?.email) && (
                       <button
                         onClick={() => deleteDoc(doc.id)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-red-500 text-white rounded text-sm hover:bg-red-600"
+                        className="verify-doc-delete-btn"
                       >
-                        <Trash2 className="w-4 h-4" /> Delete
+                        <Trash2 className="verify-doc-icon" /> Delete
                       </button>
                     )}
                   </div>
@@ -346,27 +345,27 @@ export default function VerifyDocuments() {
             </div>
 
             {/* pagination */}
-            <div className="mt-4 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
+            <div className="verify-pagination">
+              <div className="verify-pagination-info">
                 Showing {(page - 1) * PAGE_SIZE + 1} -{" "}
                 {Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length}
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="verify-pagination-controls">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
+                  className="verify-pagination-btn"
                 >
                   Prev
                 </button>
-                <span className="px-3 py-1 text-sm">
+                <span className="verify-pagination-text">
                   Page {page} / {totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
+                  className="verify-pagination-btn"
                 >
                   Next
                 </button>

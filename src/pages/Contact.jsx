@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { burstConfetti } from "../utils/confetti";
+import "../Style/Contact.css";
 
 const initialState = { name: "", email: "", message: "" };
 
@@ -55,29 +56,31 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <main className="flex-grow p-6 bg-gray-50 animate-fade-in">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-center">Contact Us</h1>
-          <p className="text-center text-gray-600 mb-8">Have questions or feedback? We&apos;d love to hear from you. Use the form or reach us directly using the details on the right.</p>
+    <div className="contact-page">
+      <main className="contact-main">
+        <div className="contact-container">
+          <div className="contact-header">
+            <h1 className="contact-title">Contact Us</h1>
+            <p className="contact-subtitle">Have questions or feedback? We&apos;d love to hear from you. Use the form or reach us directly using the details on the right.</p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="contact-grid">
             {/* Contact Form */}
-            <section aria-labelledby="contact-form" className="bg-white p-6 rounded-xl shadow-lg animate-pop smooth-transform">
-              <h2 id="contact-form" className="text-2xl font-semibold mb-4">Send a message</h2>
+            <section aria-labelledby="contact-form" className="contact-form-section">
+              <h2 id="contact-form" className="contact-form-title">Send a message</h2>
 
               {status.message && (
                 <div
                   role="status"
-                  className={`mb-4 p-3 rounded ${status.type === "success" ? "bg-green-50 text-green-800" : "bg-red-50 text-red-800"} animate-fade-in`}
+                  className={`contact-status ${status.type === "success" ? "contact-status-success" : "contact-status-error"}`}
                 >
                   {status.message}
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700">Name</span>
+              <form onSubmit={handleSubmit} className="contact-form">
+                <label className="contact-form-group">
+                  <span className="contact-label">Name</span>
                   <input
                     type="text"
                     name="name"
@@ -85,13 +88,13 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     aria-required
-                    className="mt-1 block w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="contact-input"
                     placeholder="Your full name"
                   />
                 </label>
 
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700">Email</span>
+                <label className="contact-form-group">
+                  <span className="contact-label">Email</span>
                   <input
                     type="email"
                     name="email"
@@ -99,29 +102,29 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     aria-required
-                    className="mt-1 block w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="contact-input"
                     placeholder="you@example.com"
                   />
                 </label>
 
-                <label className="block">
-                  <span className="text-sm font-medium text-gray-700">Message</span>
+                <label className="contact-form-group">
+                  <span className="contact-label">Message</span>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     aria-required
-                    className="mt-1 block w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-36"
+                    className="contact-textarea"
                     placeholder="Tell us how we can help..."
                   />
                 </label>
 
-                <div className="flex items-center gap-3">
+                <div className="contact-form-buttons">
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex items-center justify-center px-5 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-60 smooth-transform hover:scale-105"
+                    className="contact-button contact-button-submit"
                   >
                     {submitting ? "Sending..." : "Send Message"}
                   </button>
@@ -129,7 +132,7 @@ const Contact = () => {
                   <button
                     type="button"
                     onClick={() => setFormData(initialState)}
-                    className="px-4 py-2 border rounded text-gray-700 hover:border-gray-400 smooth-transform hover:scale-105"
+                    className="contact-button contact-button-reset"
                   >
                     Reset
                   </button>
@@ -138,30 +141,30 @@ const Contact = () => {
             </section>
 
             {/* Contact Info / Map */}
-            <aside className="bg-white p-6 rounded-xl shadow-lg flex flex-col justify-between animate-slide-up smooth-transform">
+            <aside className="contact-info-section">
               <div>
-                <h2 className="text-2xl font-semibold mb-2">Our Office</h2>
-                <p className="text-gray-600 mb-4">123 MicroCred Street<br/>Knowledge City, Earth</p>
+                <h2 className="contact-info-title">Our Office</h2>
+                <p className="contact-info-address">123 MicroCred Street<br/>Knowledge City, Earth</p>
 
-                <div className="mb-4">
-                  <h3 className="font-medium">Email</h3>
-                  <a href="mailto:hello@microcred.example" className="text-blue-600">hello@KaushalLink.example</a>
+                <div className="contact-info-item">
+                  <h3 className="contact-info-label">Email</h3>
+                  <a href="mailto:hello@microcred.example" className="contact-info-link">hello@KaushalLink.example</a>
                 </div>
 
-                <div className="mb-4">
-                  <h3 className="font-medium">Phone</h3>
-                  <a href="tel:+1234567890" className="text-gray-700">+1 (234) 567-890</a>
+                <div className="contact-info-item">
+                  <h3 className="contact-info-label">Phone</h3>
+                  <a href="tel:+1234567890" className="contact-info-text">+1 (234) 567-890</a>
                 </div>
 
-                <div className="mb-4">
-                  <h3 className="font-medium">Hours</h3>
-                  <p className="text-gray-600">Mon — Fri: 9:00 — 17:00</p>
+                <div className="contact-info-item">
+                  <h3 className="contact-info-label">Hours</h3>
+                  <p className="contact-info-text">Mon — Fri: 9:00 — 17:00</p>
                 </div>
               </div>
 
-              <div className="mt-4">
-                <div className="bg-gray-200 w-full h-48 rounded-lg flex items-center justify-center text-gray-500">Map Placeholder</div>
-                <p className="text-xs text-gray-500 mt-2">Map is a placeholder. Replace with an embedded map component or iframe.</p>
+              <div className="contact-map">
+                <div className="contact-map-placeholder">Map Placeholder</div>
+                <p className="contact-map-note">Map is a placeholder. Replace with an embedded map component or iframe.</p>
               </div>
             </aside>
           </div>

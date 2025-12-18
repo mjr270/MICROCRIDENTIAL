@@ -11,6 +11,7 @@ import {
   BookOpen,
   Building,
 } from "lucide-react";
+import "../Style/LandingPage.css";
 
 export default function LandingPage() {
   const { user } = useAuth();
@@ -93,90 +94,90 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-950 text-gray-800 dark:text-gray-100">
+    <div className="landing-page">
       {/* HERO */}
-      <header className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <header className="hero-section">
         <div>
-          <h1 className="text-5xl font-extrabold leading-tight mb-4 text-blue-700 dark:text-blue-400">
+          <h1 className="hero-title">
             Build, Share, and Verify Micro-credentials — instantly.
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-lg">
+          <p className="hero-description">
             Empower learners, institutions, and employers with verifiable, portable micro-credentials. Fast issuer onboarding, secure verification, and discoverable credentials.
           </p>
 
-          <div className="flex flex-wrap gap-3 mb-6">
-            <Link to="/register" className="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow">
+          <div className="hero-buttons">
+            <Link to="/register" className="hero-btn-primary">
               Get Started
             </Link>
             {!user && (
-              <Link to="/login" className="inline-flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-lg hover:border-blue-500">
+              <Link to="/login" className="hero-btn-secondary">
                 Sign In
               </Link>
             )}
-            <a href="#features" className="inline-flex items-center gap-2 px-5 py-3 bg-white border rounded-lg">
+            <a href="#features" className="hero-btn-tertiary">
               Learn More
             </a>
           </div>
 
-          <div className="flex gap-4 items-center">
+          <div className="hero-stats">
             {stats.map((s) => (
-              <div key={s.label} className="p-4 rounded-lg shadow-sm bg-white dark:bg-gray-800">
-                <div className="text-sm text-gray-500">{s.label}</div>
-                <div className="text-xl font-bold">{s.value}</div>
+              <div key={s.label} className="stat-card">
+                <div className="stat-label">{s.label}</div>
+                <div className="stat-value">{s.value}</div>
               </div>
             ))}
           </div>
         </div>
 
         <div>
-          <div className="w-full max-w-3xl mx-auto rounded-xl shadow-lg overflow-hidden">
+          <div className="hero-image-container">
             {imgLoading && (
-              <div className="w-full h-64 flex items-center justify-center bg-gray-100">
-                <div className="text-sm text-gray-500">Loading image…</div>
+              <div className="image-loading">
+                <div className="image-loading-text">Loading image…</div>
               </div>
             )}
-            <button onClick={openImage} className="w-full block focus:outline-none">
-              <img src={imageSrc} alt="Hero" onError={handleImgError} onLoad={handleImgLoad} className="w-full h-auto object-cover" />
+            <button onClick={openImage} className="hero-image-btn">
+              <img src={imageSrc} alt="Hero" onError={handleImgError} onLoad={handleImgLoad} className="hero-image" />
             </button>
           </div>
         </div>
       </header>
 
       {/* FEATURES */}
-      <section id="features" className="max-w-7xl mx-auto px-6 py-12">
-        <h2 className="text-3xl font-bold text-center mb-8">What you can do</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section id="features" className="features-section">
+        <h2 className="section-title">What you can do</h2>
+        <div className="features-grid">
           {[
             { icon: <UploadCloud className="w-8 h-8 text-blue-600" />, title: 'Issue & Upload', desc: 'Create verified credentials in minutes.' },
             { icon: <BadgeCheck className="w-8 h-8 text-green-600" />, title: 'Verify', desc: 'Built-in verification for employers and institutions.' },
             { icon: <Users className="w-8 h-8 text-yellow-500" />, title: 'Manage Learners', desc: 'Role-based dashboards and reporting.' },
           ].map((f, i) => (
-            <div key={i} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition">
-              <div className="mb-4">{f.icon}</div>
-              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">{f.desc}</p>
+            <div key={i} className="feature-card">
+              <div className="feature-icon">{f.icon}</div>
+              <h3 className="feature-title">{f.title}</h3>
+              <p className="feature-desc">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* COURSES / CARDS */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold">Featured micro-credentials</h3>
-          <Link to="/upload" className="text-sm text-blue-600">Browse all</Link>
+      <section className="courses-section">
+        <div className="section-header">
+          <h3 className="section-header-title">Featured micro-credentials</h3>
+          <Link to="/upload" className="section-link">Browse all</Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="courses-grid">
           {courses.map((c) => (
-            <div key={c.id} className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
-              <img src={c.img} alt={c.title} className="w-full h-40 object-cover" />
-              <div className="p-4">
-                <h4 className="font-semibold">{c.title}</h4>
-                <div className="text-sm text-gray-500 mb-3">{c.issuer}</div>
-                <div className="flex justify-between items-center">
-                  <div className="text-sm text-gray-600">Verified</div>
-                  <Link to="/upload" className="text-blue-600 text-sm">View</Link>
+            <div key={c.id} className="course-card">
+              <img src={c.img} alt={c.title} className="course-image" />
+              <div className="course-content">
+                <h4 className="course-title">{c.title}</h4>
+                <div className="course-issuer">{c.issuer}</div>
+                <div className="course-footer">
+                  <div className="course-verified">Verified</div>
+                  <Link to="/upload" className="course-view-link">View</Link>
                 </div>
               </div>
             </div>
@@ -186,75 +187,75 @@ export default function LandingPage() {
 
       {/* PARTNERS / INSTITUTES */}
       {/* HOW IT WORKS */}
-      <section className="max-w-7xl mx-auto px-6 py-12" id="how-it-works">
-        <h3 className="text-2xl font-bold text-center mb-6">How it works</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-            <div className="text-3xl text-blue-600 mb-3">1</div>
-            <h4 className="font-semibold mb-2">Create micro-credentials</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Issuers create short, verifiable credentials using our templates and metadata fields.</p>
+      <section className="how-it-works-section" id="how-it-works">
+        <h3 className="section-title">How it works</h3>
+        <div className="steps-grid">
+          <div className="step-card">
+            <div className="step-number">1</div>
+            <h4 className="step-title">Create micro-credentials</h4>
+            <p className="step-desc">Issuers create short, verifiable credentials using our templates and metadata fields.</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-            <div className="text-3xl text-blue-600 mb-3">2</div>
-            <h4 className="font-semibold mb-2">Share with learners</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Learners receive credentials that they can share publicly or privately with employers.</p>
+          <div className="step-card">
+            <div className="step-number">2</div>
+            <h4 className="step-title">Share with learners</h4>
+            <p className="step-desc">Learners receive credentials that they can share publicly or privately with employers.</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-            <div className="text-3xl text-blue-600 mb-3">3</div>
-            <h4 className="font-semibold mb-2">Verify instantly</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Employers and institutions verify credentials with one click — no manual checks.</p>
+          <div className="step-card">
+            <div className="step-number">3</div>
+            <h4 className="step-title">Verify instantly</h4>
+            <p className="step-desc">Employers and institutions verify credentials with one click — no manual checks.</p>
           </div>
         </div>
       </section>
 
       {/* NEWSLETTER SIGNUP */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="bg-gradient-to-r from-blue-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 rounded-xl shadow">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex-1">
-              <h4 className="text-xl font-bold">Stay in the loop</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">Subscribe to product updates, partner news, and upcoming features.</p>
+      <section className="newsletter-section">
+        <div className="newsletter-box">
+          <div className="newsletter-content">
+            <div className="newsletter-text">
+              <h4 className="newsletter-title">Stay in the loop</h4>
+              <p className="newsletter-desc">Subscribe to product updates, partner news, and upcoming features.</p>
             </div>
-            <form onSubmit={handleSubscribe} className="flex items-center gap-2 w-full md:w-auto">
+            <form onSubmit={handleSubscribe} className="newsletter-form">
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Your email"
-                className="px-4 py-3 rounded-lg border w-full md:w-80 focus:ring-2 focus:ring-blue-300"
+                className="newsletter-input"
                 aria-label="Email address"
               />
-              <button type="submit" className="px-4 py-3 bg-blue-600 text-white rounded-lg">Subscribe</button>
+              <button type="submit" className="newsletter-btn">Subscribe</button>
             </form>
           </div>
-          {newsletterMsg && <div className="mt-4 text-sm text-green-600">{newsletterMsg}</div>}
+          {newsletterMsg && <div className="newsletter-msg">{newsletterMsg}</div>}
         </div>
       </section>
       {/* Gallery removed — hero now uses the main Adobe image with fallback */}
 
-      <section className="bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-8">
-            <h3 className="text-3xl font-extrabold">Trusted by institutions worldwide</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">Universities, training providers, and employers use KaushalLink to issue, share and verify short-form credentials.</p>
-            <div className="mt-4 inline-flex items-center gap-3 bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow">
-              <div className="text-lg font-bold text-blue-600">450+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">institutions onboarded</div>
+      <section className="partners-section">
+        <div className="partners-content">
+          <div className="partners-header">
+            <h3 className="partners-main-title">Trusted by institutions worldwide</h3>
+            <p className="partners-subtitle">Universities, training providers, and employers use KaushalLink to issue, share and verify short-form credentials.</p>
+            <div className="partners-badge">
+              <div className="partners-badge-number">450+</div>
+              <div className="partners-badge-text">institutions onboarded</div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="partners-grid">
             {partners.map((p) => (
-              <div key={p.name} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow hover:shadow-lg transition flex items-center gap-3">
-                <div className="flex-shrink-0 w-20 h-12 flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded">
-                  <img src={p.logo} alt={p.name} className="max-h-10 object-contain" />
+              <div key={p.name} className="partner-card">
+                <div className="partner-logo-container">
+                  <img src={p.logo} alt={p.name} className="partner-logo" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <div className="text-sm font-semibold">{p.name}</div>
-                    <div className="text-xs text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300 px-2 py-0.5 rounded-full">Verified</div>
+                <div className="partner-info">
+                  <div className="partner-name-row">
+                    <div className="partner-name">{p.name}</div>
+                    <div className="partner-verified-badge">Verified</div>
                   </div>
-                  <div className="text-xs text-gray-500">Partner since 2023</div>
+                  <div className="partner-since">Partner since 2023</div>
                 </div>
               </div>
             ))}
@@ -263,46 +264,46 @@ export default function LandingPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <h3 className="text-2xl font-bold text-center mb-8">What people say</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="testimonials-section">
+        <h3 className="section-title">What people say</h3>
+        <div className="testimonials-grid">
           {testimonials.map((t) => (
-            <div key={t.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-              <div className="flex items-center gap-4 mb-3">
-                <div className="bg-blue-100 text-blue-600 rounded-full p-3"><Star className="w-5 h-5" /></div>
-                <div className="font-semibold">{t.name}</div>
+            <div key={t.id} className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-icon"><Star className="w-5 h-5" /></div>
+                <div className="testimonial-name">{t.name}</div>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">{t.note}</p>
+              <p className="testimonial-text">{t.note}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-12 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h3 className="text-3xl font-bold mb-4">Ready to get started?</h3>
-          <p className="mb-6 text-blue-100">Create your first micro-credential and make it discoverable to employers and institutions worldwide.</p>
-          <div className="flex justify-center gap-4">
-            <Link to="/register" className="px-6 py-3 bg-white text-blue-700 rounded-lg font-semibold">Create account</Link>
-            <Link to="/upload" className="px-6 py-3 border border-white rounded-lg">Upload credential</Link>
+      <section className="cta-section">
+        <div className="cta-content">
+          <h3 className="cta-title">Ready to get started?</h3>
+          <p className="cta-desc">Create your first micro-credential and make it discoverable to employers and institutions worldwide.</p>
+          <div className="cta-buttons">
+            <Link to="/register" className="cta-btn-primary">Create account</Link>
+            <Link to="/upload" className="cta-btn-secondary">Upload credential</Link>
           </div>
         </div>
       </section>
 
       {/* Image Modal */}
       {isOpen && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={closeImage}>
-          <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden max-w-4xl w-full shadow-lg" onClick={(e) => e.stopPropagation()}>
-            <div className="p-3 flex justify-end">
-              <button onClick={closeImage} className="text-gray-600 dark:text-gray-300 hover:text-gray-900">Close</button>
+        <div role="dialog" aria-modal="true" className="image-modal" onClick={closeImage}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <button onClick={closeImage} className="modal-close-btn">Close</button>
             </div>
-            <img src={imageSrc} alt="Hero large" className="w-full h-auto" onError={handleImgError} />
+            <img src={imageSrc} alt="Hero large" className="modal-image" onError={handleImgError} />
           </div>
         </div>
       )}
 
-      <footer className="py-8 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 mt-12">
+      <footer className="landing-footer">
         © {new Date().getFullYear()} KaushalLink — built with ❤️ for modern learning.
       </footer>
     </div>
