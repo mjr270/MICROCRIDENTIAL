@@ -1,5 +1,5 @@
 {
-  "name": "microcred-frontend",
+  "name": "kaushallink",
   "version": "1.0.0",
   "private": true,
   "description": "KaushalLink — A modern platform to create, upload, and verify micro-credentials securely.",
@@ -9,16 +9,12 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "api": "node server/chat-proxy.js",
     "build": "vite build",
     "preview": "vite preview",
     "build:css": "tailwindcss -i ./src/index.css -o ./src/output.css --minify",
     "postinstall": "chmod +x node_modules/.bin/vite || echo 'Windows system – skipping chmod'"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "node-fetch": "^2.6.7",
-    "express": "^4.18.2",
     "lucide-react": "^0.545.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,12 +24,13 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.9.10",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "postcss": "^8.5.6",
     "prettier": "^3.0.0",
     "tailwindcss": "^3.4.18",
-    "vite": "^4.5.14"
+    "vite": "^7.3.0"
   }
 }

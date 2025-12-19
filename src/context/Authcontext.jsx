@@ -33,25 +33,27 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // 🔹 Login handler (mock implementation)
-  const login = useCallback(({ email, role }) => {
+  // 🔹 Login handler - now accepts full user object
+  const login = useCallback((userData) => {
     try {
       setError(null);
-      const newUser = { email, role, loggedInAt: new Date().toISOString() };
+      const newUser = { 
+        ...userData, 
+        loggedInAt: new Date().toISOString() 
+      };
       setUser(newUser);
       localStorage.setItem("mc_user", JSON.stringify(newUser));
-      console.info(`[Auth] User logged in as ${role}`);
+      console.info(`[Auth] User logged in as ${userData.role}`);
     } catch (err) {
       console.error("Login failed:", err);
       setError("Failed to log in. Please try again.");
     }
   }, []);
 
-  // 🔹 Register handler (demo: logs in immediately)
-  const register = useCallback(({ email, role }) => {
-    login({ email, role });
-    console.info(`[Auth] User registered as ${role}`);
-  }, [login]);
+  // 🔹 Register handler - for backward compatibility
+  const register = useCallback((userData) => {
+    console.info(`[Auth] Registration handled by separate system`);
+  }, []);
 
   // 🔹 Logout handler
   const logout = useCallback(() => {

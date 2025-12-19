@@ -1,6 +1,6 @@
 // src/utils/storage.js
 
-const STORAGE_KEY = "docs";
+const STORAGE_KEY = "kaushallink_documents"; // Synced with DocumentContext
 
 // Get all documents
 export const getDocs = () => {
@@ -41,4 +41,42 @@ export const verifyDoc = (id) => {
     d.id === id ? { ...d, status: "verified" } : d
   );
   saveDocs(all);
+};
+
+// Offers management
+const OFFERS_KEY = "job_offers";
+
+export const getOffers = () => {
+  try {
+    return JSON.parse(localStorage.getItem(OFFERS_KEY) || "[]");
+  } catch (e) {
+    console.error("Failed to parse offers from localStorage:", e);
+    return [];
+  }
+};
+
+export const saveOffers = (offers) => {
+  localStorage.setItem(OFFERS_KEY, JSON.stringify(offers));
+};
+
+export const createOffer = (offer) => {
+  const all = getOffers();
+  all.unshift(offer);
+  saveOffers(all);
+  return offer;
+};
+
+export const updateOfferStatus = (offerId, status) => {
+  const all = getOffers().map((o) =>
+    o.id === offerId ? { ...o, status, updatedAt: Date.now() } : o
+  );
+  saveOffers(all);
+};
+
+export const getOffersByLearner = (learnerEmail) => {
+  return getOffers().filter((o) => o.learnerEmail === learnerEmail);
+};
+
+export const getOffersByEmployer = (employerEmail) => {
+  return getOffers().filter((o) => o.employerEmail === employerEmail);
 };

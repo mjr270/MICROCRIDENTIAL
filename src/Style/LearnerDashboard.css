@@ -43,6 +43,14 @@
   flex: 1;
   min-width: 150px;
   text-align: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.learner-stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(37, 99, 235, 0.3);
 }
 
 :root[data-theme="dark"] .learner-stat-card {
@@ -149,8 +157,101 @@
   margin-bottom: 1rem;
 }
 
+.learner-stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.learner-stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.learner-stat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 :root[data-theme="dark"] .learner-documents-title {
   color: #f3f4f6;
+}
+
+/* Institution Documents Styles */
+.institution-docs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.institution-doc-card {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.institution-doc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme="dark"] .institution-doc-card {
+  background: #374151;
+  border-color: #4b5563;
+}
+
+.doc-info h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+:root[data-theme="dark"] .doc-info h4 {
+  color: #f3f4f6;
+}
+
+.doc-owner,
+.doc-date {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0.25rem 0;
+}
+
+:root[data-theme="dark"] .doc-owner,
+:root[data-theme="dark"] .doc-date {
+  color: #9ca3af;
+}
+
+.doc-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.doc-status-badge.verified {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+:root[data-theme="dark"] .doc-status-badge.verified {
+  background: #064e3b;
+  color: #6ee7b7;
 }
 
 @media (max-width: 768px) {
@@ -168,5 +269,9 @@
 
   .learner-stat-card {
     min-width: 100%;
+  }
+
+  .institution-docs-list {
+    grid-template-columns: 1fr;
   }
 }

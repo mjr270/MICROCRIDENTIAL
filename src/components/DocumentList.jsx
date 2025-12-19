@@ -11,26 +11,49 @@ export default function DocumentList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchDocs = async () => {
       setLoading(true);
-      const all = await getDocs();
-      if (!user) {
-        setDocs([]);
-        setLoading(false);
-        return;
-      }
+      try {
+        const all = getDocs() || [];
+        if (!isMounted) return;
+        
+        if (!user) {
+          setDocs([]);
+          setLoading(false);
+          return;
+        }
 
-      if (user.role === "Admin") setDocs(all);
-      else
-        setDocs(
-          all.filter((d) => d.owner === user.email || d.owner === user.role)
-        );
-      setLoading(false);
+        if (user.role === "Admin") {
+          setDocs(all);
+        } else {
+          setDocs(
+            all.filter((d) => d.owner === user.email || d.owner === user.role)
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+        if (isMounted) setDocs([]);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     };
     fetchDocs();
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   const handleDelete = async (id) => {
+    // Security check: Only allow owner or admin to delete
+    const doc = docs.find(d => d.id === id);
+    if (!doc) return;
+    
+    if (user.role !== 'Admin' && doc.owner !== user.email) {
+      alert('You can only delete your own documents.');
+      return;
+    }
+    
     if (!window.confirm("Are you sure you want to delete this document?")) return;
     await deleteDoc(id);
     setDocs((prev) => prev.filter((d) => d.id !== id));
@@ -118,8 +141,8 @@ export default function DocumentList() {
                   </a>
                 )}
 
-                {/* Admin Actions */}
-                {user?.role === "Admin" && doc.status !== "verified" && (
+                {/* Admin & Institution Actions - Can verify pending documents */}
+                {(user?.role === "Admin" || user?.role === "Institution") && doc.status !== "verified" && (
                   <button
                     onClick={() => handleVerify(doc.id)}
                     className="verify-btn"

@@ -101,11 +101,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: box-shadow 0.3s;
+  transition: all 0.3s ease-in-out;
+  animation: fadeInUp 0.6s ease-out;
+  cursor: pointer;
 }
 
 .document-card:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 10px rgba(37, 99, 235, 0.2);
+  transform: translateY(-5px) scale(1.01);
 }
 
 :root[data-theme="dark"] .document-card {
@@ -240,4 +243,15 @@
 
 .delete-btn:hover {
   background-color: #dc2626;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

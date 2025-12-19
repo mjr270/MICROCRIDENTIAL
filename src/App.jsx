@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import RoleDashboardRouter from './components/RoleDashboardRouter.jsx';
 import { LanguageProvider } from './context/LanguageContext.jsx';
 import Chatbot from './components/Chatbot.jsx';
 
@@ -12,7 +13,6 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
 
 import LearnerDashboard from './pages/Dshboards/LearnerDashboard.jsx';
 import InstitutionDashboard from './pages/Dshboards/InstitutionDashbord.jsx';
@@ -26,7 +26,8 @@ import Verify from "./pages/VerifyDocument.jsx";
 
 import NotFound from './pages/NotFound.jsx';
 import Unauthorized from './pages/Uanuthorized.jsx';
-import Profile from "./pages/profile.jsx";
+import ProfileRouter from "./pages/ProfileRouter.jsx";
+import Verification from './pages/Verification.jsx';
 
 function App() {
   return (
@@ -39,9 +40,16 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verification" element={<Verification />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Role-based Dashboard Router - redirects to correct dashboard based on user role */}
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <RoleDashboardRouter />
+            </ProtectedRoute>
+          } />
 
           {/* Protected Routes */}
           <Route path="/upload" element={
@@ -51,7 +59,7 @@ function App() {
           } />
 
           <Route path="/verify" element={
-            <ProtectedRoute allowedRoles={['Admin']}>
+            <ProtectedRoute allowedRoles={['Admin', 'Institution', 'Employer']}>
               <VerifyDocuments />
             </ProtectedRoute>
           } />
@@ -99,7 +107,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute>
-                <Profile />
+                <ProfileRouter />
               </ProtectedRoute>
             }
           />

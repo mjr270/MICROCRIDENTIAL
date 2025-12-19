@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { AuthProvider } from "./context/Authcontext";
+import { DocumentProvider } from "./context/DocumentContext";
 
 /**
  * Loading fallback for Suspense & AuthProvider
@@ -71,9 +72,11 @@ root.render(
     <ErrorBoundary>
       <Suspense fallback={<LoadingFallback />}>
         <AuthProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <DocumentProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </DocumentProvider>
         </AuthProvider>
       </Suspense>
     </ErrorBoundary>

@@ -155,12 +155,26 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  animation: pop 0.3s ease-out;
-  transition: transform 0.2s;
+  animation: fadeInUp 0.6s ease-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .dashboard-stat-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(37, 99, 235, 0.3);
+}
+
+.dashboard-stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.dashboard-stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dashboard-stat-card:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 :root[data-theme="dark"] .dashboard-stat-card {
@@ -284,8 +298,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  animation: fade-in 0.3s ease-in;
-  transition: transform 0.2s;
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.dashboard-course-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 10px rgba(37, 99, 235, 0.2);
 }
 
 :root[data-theme="dark"] .dashboard-course-card {
@@ -295,6 +316,12 @@
 .dashboard-course-info h3 {
   font-weight: 600;
   color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.dashboard-course-card:hover .dashboard-course-info h3 {
+  color: #2563eb;
+  transform: translateX(5px);
 }
 
 :root[data-theme="dark"] .dashboard-course-info h3 {
@@ -629,5 +656,16 @@
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

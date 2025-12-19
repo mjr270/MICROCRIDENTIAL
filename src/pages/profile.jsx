@@ -1,22 +1,72 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useAuth } from "../context/Authcontext";
+import { getDocs } from "../utils/storage";
 import "../Style/Profile.css";
 
 const Profile = () => {
-  // Mock user data (can be replaced with API data)
+  const { user: authUser, login } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedInstitution, setEditedInstitution] = useState(authUser?.institution || '');
+  const [uploadedDocs, setUploadedDocs] = useState([]);
+  
+  // Load user's uploaded documents
+  useEffect(() => {
+    if (authUser && authUser.email) {
+      const allDocs = getDocs();
+      const userDocs = allDocs.filter(d => d.owner === authUser.email);
+      setUploadedDocs(userDocs);
+    }
+  }, [authUser]);
+  
+  // Use real user data from AuthContext
   const [user, setUser] = useState({
-    name: "Zaid Khan",
-    email: "zaid.khan@example.com",
-    role: "Learner",
-    institution: "ABC Institute of Technology",
-    joinedDate: "March 2024",
+    name: authUser ? `${authUser.firstName} ${authUser.lastName}` : "Guest User",
+    email: authUser?.email || "guest@example.com",
+    role: authUser?.role || "Learner",
+    phone: authUser?.phone || "N/A",
+    institution: authUser?.institution || "Not specified",
+    joinedDate: authUser?.createdAt ? new Date(authUser.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : "Recently",
+    verifiedDate: authUser?.verifiedAt ? new Date(authUser.verifiedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : "N/A",
     profilePhoto: "https://i.pravatar.cc/150?img=12", // default placeholder
-    microcredentials: [
-      { id: 1, title: "Web Development Basics", issuer: "MicroCred Academy", date: "May 2024" },
-      { id: 2, title: "React Frontend Essentials", issuer: "MicroCred Pro", date: "July 2024" },
-    ],
+    microcredentials: uploadedDocs.filter(d => d.status === 'verified').map((d, idx) => ({
+      id: idx + 1,
+      title: d.name,
+      issuer: d.verifiedBy || "System",
+      date: new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    })),
   });
 
+  // Update user state when uploadedDocs changes
+  useEffect(() => {
+    setUser(prev => ({
+      ...prev,
+      microcredentials: uploadedDocs.filter(d => d.status === 'verified').map((d, idx) => ({
+        id: idx + 1,
+        title: d.name,
+        issuer: d.verifiedBy || "System",
+        date: new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      })),
+      institution: authUser?.institution || "Not specified"
+    }));
+  }, [uploadedDocs, authUser]);
+
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleSaveInstitution = () => {
+    if (!authUser) return;
+    
+    // Update user data in storage
+    import('../data/users').then(({ updateUser }) => {
+      const result = updateUser(authUser.email, { institution: editedInstitution });
+      if (result.success) {
+        // Update local state and AuthContext
+        const updatedUser = { ...authUser, institution: editedInstitution };
+        login(updatedUser);
+        setUser(prev => ({ ...prev, institution: editedInstitution }));
+        setIsEditing(false);
+      }
+    });
+  };
 
   // Skill map: each skill has a proficiency (0-100)
   const [skills, setSkills] = useState([
@@ -89,8 +139,30 @@ const Profile = () => {
             <h1>{user.name}</h1>
             <p className="email">{user.email}</p>
             <p className="role">Role: {user.role}</p>
-            <p className="institution">Institution: {user.institution}</p>
+            <p className="phone">Phone: {user.phone}</p>
+            <div className="institution-edit-container">
+              {isEditing ? (
+                <div className="institution-edit">
+                  <input
+                    type="text"
+                    value={editedInstitution}
+                    onChange={(e) => setEditedInstitution(e.target.value)}
+                    className="institution-input"
+                    placeholder="Enter institution name"
+                  />
+                  <button onClick={handleSaveInstitution} className="save-btn">Save</button>
+                  <button onClick={() => { setIsEditing(false); setEditedInstitution(authUser?.institution || ''); }} className="cancel-btn">Cancel</button>
+                </div>
+              ) : (
+                <p className="institution">
+                  Institution: {user.institution}
+                  <button onClick={() => setIsEditing(true)} className="edit-btn">Edit</button>
+                </p>
+              )}
+            </div>
             <p className="joined">Joined: {user.joinedDate}</p>
+            <p className="verified">Verified: {user.verifiedDate}</p>
+            <p className="doc-count">Uploaded Documents: {uploadedDocs.length}</p>
           </div>
         </div>
 

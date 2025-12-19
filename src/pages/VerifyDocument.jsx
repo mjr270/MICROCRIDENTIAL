@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getDocs, saveDocs, saveDoc, deleteDoc as removeDoc } from "../utils/storage.js";
 import { useAuth } from "../context/Authcontext.jsx";
+import { useDocuments } from "../context/DocumentContext";
 import "../Style/VerifyDocument.css";
 import {
   Search,
@@ -18,6 +19,7 @@ const PAGE_SIZE = 8;
 
 export default function VerifyDocuments() {
   const { user } = useAuth();
+  const { getDocuments, verifyDocument, deleteDocument, updateDocument, documents: contextDocs } = useDocuments();
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
@@ -29,19 +31,21 @@ export default function VerifyDocuments() {
   const [selected, setSelected] = useState(new Set());
   const [page, setPage] = useState(1);
 
-  // fetch docs
+  // fetch docs - also listen to contextDocs changes
   useEffect(() => {
     setLoading(true);
     try {
-      const all = getDocs() || [];
+      // Try from context first, fallback to getDocuments
+      const all = contextDocs && contextDocs.length > 0 ? contextDocs : (getDocuments() || []);
       setDocs(all);
+      console.log('VerifyDocuments loaded:', all.length, 'documents');
     } catch (e) {
       console.error("Failed to load docs", e);
       setDocs([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [getDocuments, contextDocs]);
 
   // stats derived
   const statsSummary = useMemo(() => {
@@ -76,7 +80,26 @@ export default function VerifyDocuments() {
     // NOTE: If user is not defined, hide all
     if (!user) return [];
 
-    if (user.role !== "Admin") {
+    if (user.role === "Admin") {
+      // Admin sees all documents
+    } else if (user.role === "Institution") {
+      // Institution sees documents from learners at their institution AND their own documents (case-insensitive)
+      list = list.filter((d) => 
+        (d.ownerInstitution && user.institution && 
+         d.ownerInstitution.toLowerCase() === user.institution.toLowerCase()) || 
+        d.owner === user.email || 
+        d.owner === user.role
+      );
+    } else if (user.role === "Employer") {
+      // Employer can see verified documents from any institution (for hiring purposes)
+      // and their own documents
+      list = list.filter((d) => 
+        d.status === "verified" || 
+        d.owner === user.email || 
+        d.owner === user.role
+      );
+    } else {
+      // Learners and others see only their own documents
       list = list.filter((d) => d.owner === user.email || d.owner === user.role);
     }
 
@@ -111,8 +134,21 @@ export default function VerifyDocuments() {
     if (!window.confirm("Mark this document as VERIFIED?")) return;
     const doc = docs.find((d) => d.id === id);
     if (!doc) return;
-    const updated = { ...doc, status: "verified", verifiedAt: new Date().toISOString() };
+    
+    // Use DocumentContext verification
+    verifyDocument(id, {
+      status: 'verified',
+      verifiedBy: user?.email || 'system',
+      verificationNotes: 'Document verified'
+    });
+    
+    // Update local storage for backward compatibility
+    const updated = { ...doc, status: "verified", verifiedAt: new Date().toISOString(), verifiedBy: user?.email || 'system' };
     updateLocalDoc(updated);
+    
+    // Force refresh from context
+    const refreshedDocs = getDocuments();
+    setDocs(refreshedDocs);
     setToast({ type: 'success', message: `${doc.name} verified` });
     try { import('../utils/confetti').then(m => m.burstConfetti({ count: 16 })).catch(()=>{}); } catch(e) {}
     setTimeout(() => setToast(null), 2200);
@@ -121,11 +157,25 @@ export default function VerifyDocuments() {
   const bulkVerifySelected = () => {
     if (selected.size === 0) return alert("No documents selected.");
     if (!window.confirm(`Verify ${selected.size} selected document(s)?`)) return;
+    
+    // Verify each document using DocumentContext
+    selected.forEach(id => {
+      verifyDocument(id, {
+        status: 'verified',
+        verifiedBy: user?.email || 'system',
+        verificationNotes: 'Bulk verified'
+      });
+    });
+    
     const next = docs.map((d) =>
-      selected.has(d.id) ? { ...d, status: "verified", verifiedAt: new Date().toISOString() } : d
+      selected.has(d.id) ? { ...d, status: "verified", verifiedAt: new Date().toISOString(), verifiedBy: user?.email || 'system' } : d
     );
     setDocs(next);
     saveDocs(next);
+    
+    // Force refresh from context
+    const refreshedDocs = getDocuments();
+    setDocs(refreshedDocs);
     setSelected(new Set());
     setToast({ type: 'success', message: `${selected.size} documents verified` });
     try { import('../utils/confetti').then(m => m.burstConfetti({ count: Math.min(40, selected.size * 6) })) } catch(e) {}
@@ -134,6 +184,11 @@ export default function VerifyDocuments() {
 
   const deleteDoc = (id) => {
     if (!window.confirm("Delete this document permanently?")) return;
+    
+    // Use DocumentContext deletion
+    deleteDocument(id, user?.email || 'system');
+    
+    // Update local storage for backward compatibility
     removeDoc(id);
     const remaining = docs.filter((d) => d.id !== id);
     setDocs(remaining);

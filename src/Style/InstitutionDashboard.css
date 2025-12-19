@@ -43,6 +43,14 @@
   flex: 1;
   min-width: 150px;
   text-align: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.institution-stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(37, 99, 235, 0.3);
 }
 
 :root[data-theme="dark"] .institution-stat-card {
@@ -151,6 +159,29 @@
 
 :root[data-theme="dark"] .institution-documents-title {
   color: #f3f4f6;
+}
+
+.institution-stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.institution-stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.institution-stat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {

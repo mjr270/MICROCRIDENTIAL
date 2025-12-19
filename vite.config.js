@@ -34,7 +34,8 @@ export default defineConfig({
     },
   },
 
+  // Only expose specific environment variables (secure approach)
   define: {
-    'process.env': process.env, // Support environment variables
+    'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'http://localhost:3001/api'),
   },
 });

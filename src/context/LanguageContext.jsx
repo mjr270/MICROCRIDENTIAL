@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import translations from '../i18n/translations';
 
-const STORAGE_KEY = 'microcred-lang';
+const STORAGE_KEY = 'kaushallink-lang';
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {

@@ -21,13 +21,31 @@ export default function Navbar() {
 
   const { lang, setLang, t } = useLanguage();
 
+  // Generate role-specific dashboard link
+  const getDashboardLink = () => {
+    if (!user) return { to: "/dashboard", label: t('dashboard') };
+    
+    const rolePathMap = {
+      Learner: '/dashboard/learner',
+      Institution: '/dashboard/institution',
+      Employer: '/dashboard/employer',
+      Admin: '/dashboard/admin',
+    };
+    
+    return { 
+      to: rolePathMap[user.role] || '/dashboard', 
+      label: t('dashboard'),
+      roles: ["Learner", "Institution", "Employer", "Admin"]
+    };
+  };
+
   const navLinks = [
     { to: "/", label: t('home') },
     { to: "/about", label: t('about') },
     { to: "/contact", label: t('contact') },
     { to: "/upload", label: t('upload'), roles: ["Learner", "Institution"] },
-    { to: "/verify", label: t('verify'), roles: ["Admin", "Employer"] },
-    { to: "/dashboard", label: t('dashboard'), roles: ["Learner", "Institution", "Employer", "Admin"] },
+    { to: "/verify", label: t('verify'), roles: ["Admin", "Employer", "Institution"] },
+    getDashboardLink(),
   ];
 
   const visibleLinks = navLinks.filter(

@@ -45,7 +45,7 @@ export default function Footer() {
               <Linkedin className="footer-social-icon" />
             </a>
             <a
-              href="https://microcred.example.com"
+              href="https://kaushallink.example.com"
               target="_blank"
               rel="noopener noreferrer"
               className="footer-social-link"
@@ -61,7 +61,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="footer-bottom">
-          © {year} <span className="brand-name">MicroCred</span> — A demo micro-credential
+          © {year} <span className="brand-name">KaushalLink</span> — A demo micro-credential
           frontend built with <span className="tech-stack">React + TailwindCSS</span>.
           <br className="line-break" /> All rights reserved.
         </div>

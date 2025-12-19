@@ -144,11 +144,11 @@ const Contact = () => {
             <aside className="contact-info-section">
               <div>
                 <h2 className="contact-info-title">Our Office</h2>
-                <p className="contact-info-address">123 MicroCred Street<br/>Knowledge City, Earth</p>
+                <p className="contact-info-address">123 KaushalLink Street<br/>Knowledge City, Earth</p>
 
                 <div className="contact-info-item">
                   <h3 className="contact-info-label">Email</h3>
-                  <a href="mailto:hello@microcred.example" className="contact-info-link">hello@KaushalLink.example</a>
+                  <a href="mailto:hello@kaushallink.example" className="contact-info-link">hello@kaushallink.example</a>
                 </div>
 
                 <div className="contact-info-item">
@@ -163,8 +163,14 @@ const Contact = () => {
               </div>
 
               <div className="contact-map">
-                <div className="contact-map-placeholder">Map Placeholder</div>
-                <p className="contact-map-note">Map is a placeholder. Replace with an embedded map component or iframe.</p>
+                <iframe
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-0.489%2C51.28%2C0.236%2C51.686&layer=mapnik"
+                  className="contact-map-iframe"
+                  title="Office Location Map"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <p className="contact-map-note">Visit us at our office location</p>
               </div>
             </aside>
           </div>

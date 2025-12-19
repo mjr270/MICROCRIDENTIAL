@@ -8,7 +8,6 @@ import "../Style/Login.css";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Learner");
   const [error, setError] = useState("");
   const [status, setStatus] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -32,16 +31,35 @@ export default function Login() {
     setError("");
     setStatus("Signing in...");
 
-    // perform login (demo authcontext)
-    login({ email, role });
-    const rolePathMap = {
-      Learner: "/dashboard/learner",
-      Institution: "/dashboard/institution",
-      Employer: "/dashboard/employer",
-      Admin: "/dashboard/admin",
-    };
-    navigate(rolePathMap[role] || from, { replace: true });
-    try { burstConfetti({ count: 10 }); } catch (e) {}
+    // Use new authentication system
+    import('../data/users').then(({ authenticateUser }) => {
+      const result = authenticateUser(email, password);
+      
+      setStatus(null);
+      
+      if (result.success) {
+        // Update user with correct role from database
+        const userData = { ...result.user };
+        login(userData);
+        
+        const rolePathMap = {
+          Learner: "/dashboard/learner",
+          Institution: "/dashboard/institution",
+          Employer: "/dashboard/employer",
+          Admin: "/dashboard/admin",
+        };
+        
+        navigate(rolePathMap[userData.role] || from, { replace: true });
+        try { burstConfetti({ count: 10 }); } catch (e) {}
+      } else if (result.needsVerification) {
+        setError(result.message);
+        setTimeout(() => {
+          navigate('/verification', { state: { email: result.email } });
+        }, 1500);
+      } else {
+        setError(result.message);
+      }
+    });
   };
 
   return (
@@ -107,22 +125,7 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Role */}
-          <div className="login-form-group">
-            <label className="login-label">
-              Select Role
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="login-select"
-            >
-              <option>Learner</option>
-              <option>Institution</option>
-              <option>Employer</option>
-              <option>Admin</option>
-            </select>
-          </div>
+
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
